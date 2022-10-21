@@ -8,6 +8,7 @@
 
 body {
     background: var(--background-color);
+    color: var(--main-text-color);
 }
 
 .navbar {
@@ -25,4 +26,29 @@ body {
 
 .material-icons {
     margin: 0px;
+}
+.card {
+    background: var(--background-color);
+}
+.bottom-navbar {
+    background: var(--background-color);
+}
+#close {
+    width: 50px;
+    display: inline-block;
+}
+.navbar-brand {
+    display: inline-block;
+    width: 100px;
+}
+#menu {
+   display: block;
+}
+@media(prefers-color-scheme: dark){
+    :root {
+        --background-color: #555555;
+        --main-text-color: #eeeeee;
+        --toolbar-color: #621775;
+        --toolbar-text-color: #eeeeee;
+    }
 }
