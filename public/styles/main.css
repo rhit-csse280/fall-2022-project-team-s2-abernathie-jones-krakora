@@ -1,10 +1,17 @@
+:root {
+    --background-color: #DDDDDD;
+    --main-text-color: #000000;
+    --toolbar-color: #800000;
+    --toolbar-text-color: #ffffff;
+}
+
 body {
-    background: #DDDDDD;
+    background: var(--background-color);
 }
 
 .navbar {
-    background-color: #800000;
-    color: white;
+    background-color: var(--toolbar-color);
+    color: tool;
 }
 
 .page-container {
