@@ -17,3 +17,7 @@ body {
 .page-container {
     margin-top: 75px;
 }
+
+.bmd-layout-content {
+    height: 100vh;
+}
