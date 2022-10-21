@@ -1,7 +1,8 @@
 :root {
     --background-color: #DDDDDD;
     --main-text-color: #000000;
-    --toolbar-color: #800000;
+    --toolbar-color: #8d22a8
+    ;
     --toolbar-text-color: #ffffff;
 }
 
@@ -20,4 +21,8 @@ body {
 
 .bmd-layout-content {
     height: 100vh;
+}
+
+.material-icons {
+    margin: 0px;
 }
