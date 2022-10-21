@@ -15,7 +15,7 @@
   <div class="bmd-layout-container bmd-drawer-f-l bmd-drawer-overlay">
     <header class="bmd-layout-header">
       <!-- Top Navbar -->
-      <nav class="navbar navbar-dark fixed-top">
+      <nav class="navbar fixed-top">
         <button class="navbar-toggler" type="button" data-toggle="drawer" data-target="#dw-s2"
           aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -25,8 +25,12 @@
     </header>
     <!-- Drawer -->
     <div id="dw-s2" class="bmd-layout-drawer bg-faded">
-      <header>
+      <header id="menu">
         <a class="navbar-brand">Menu</a>
+        <button id="close" class="navbar-toggler" type="button" data-toggle="drawer" data-target="#dw-s2"
+          aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="material-icons">close</i>
+        </button>
       </header>
       <ul class="list-group">
         <a class="list-group-item"><i class="material-icons">list</i>List</a>
@@ -74,7 +78,7 @@
         </div>
       </div>
       <!-- Bottom navbar -->
-      <nav class="navbar navbar-dark fixed-bottom bg-light">
+      <nav class="navbar fixed-bottom">
         <button type="button" class="btn btn-secondary"><i class="material-icons">add</i></button>
         <button type="button" class="btn btn-secondary"><i class="material-icons">edit</i></button>
         <button type="button" class="btn btn-secondary"><i class="material-icons">mail</i></button>
