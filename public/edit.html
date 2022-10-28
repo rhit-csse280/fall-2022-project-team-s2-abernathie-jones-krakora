@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link rel="stylesheet" href="styles/bootstrap-material-design.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" integrity="sha384-xeJqLiuOvjUBq3iGOjvSQSIlwrpqjSHXpduPd6rQpuiM3f5/ijby8pCsnbu5S81n" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="styles/main.css">
+    <title>Greg~O</title>
+</head>
+
+<body>
+    <div class="bmd-layout-container bmd-drawer-f-l bmd-drawer-overlay">
+        <header class="bmd-layout-header">
+            <!-- Top Navbar -->
+            <nav class="navbar fixed-top">
+                <button class="navbar-toggler" type="button" data-toggle="drawer" data-target="#dw-s2"
+                    aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="material-icons">menu</i>
+                </button>
+                <a class="navbar-brand">Greg~O</a>
+            </nav>
+        </header>
+        <!-- Drawer -->
+        <div id="dw-s2" class="bmd-layout-drawer bg-faded">
+            <header id="menu">
+                <a class="navbar-brand">Menu</a>
+                <button id="close" class="navbar-toggler" type="button" data-toggle="drawer" data-target="#dw-s2"
+                    aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="material-icons">close</i>
+                </button>
+            </header>
+            <ul class="list-group">
+                <a class="list-group-item"><i class="material-icons">list</i>List</a>
+                <a class="list-group-item"><i class="material-icons">edit</i>Edit</a>
+                <a class="list-group-item"><i class="material-icons">calendar_month</i>Calendar</a>
+            </ul>
+            <ul>
+                <a class="list-group-item"><i class="material-icons">logout</i>Sign out</a>
+            </ul>
+        </div>
+
+        <main class="bmd-layout-content">
+            <!-- Page content -->
+            <div id="editPage" class="container page-container">
+                <h1 id="calendar-title">January 2021</h1>
+                <div id="calendar-header">
+                    <div>Sunday</div>
+                    <div>Monday</div>
+                    <div>Tuesday</div>
+                    <div>Wednesday</div>
+                    <div>Thursday</div>
+                    <div>Friday</div>
+                    <div>Saturday</div>
+                </div>
+                <div id="calendar">
+                    <div id="calendar-spacer"></div>
+                    <div class="card">
+                        <div class="card-body">
+                            1
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            2
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            2
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            2
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            2
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            2
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            2
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            2
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            2
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            2
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            2
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            2
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            2
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" id="fab" class="btn bmd-btn-fab">
+                    <i class="material-icons">add</i>
+                </button>
+            </div>
+            <!-- Bottom navbar -->
+            <nav class="navbar bottom-navbar fixed-bottom">
+                <button type="button" class="btn btn-secondary"><i class="material-icons">list</i></button>
+                <button type="button" class="btn btn-secondary"><i class="material-icons">edit</i></button>
+                <button type="button" class="btn btn-secondary"><i class="material-icons">calendar_month</i></button>
+            </nav>
+        </main>
+    </div>
+
+    <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/popper.js"></script>
+    <script src="scripts/bootstrap-material-design.js"></script>
+    <script>$("body").bootstrapMaterialDesign();</script>
+    <!-- <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
+    <script src="/__/firebase/init.js"></script> -->
+    <script src="scripts/main.js"></script>
+
+
+</body>
+
+</html>
