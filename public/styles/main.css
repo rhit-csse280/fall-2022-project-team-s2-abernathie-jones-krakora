@@ -53,6 +53,14 @@ body {
 .material-icons{
     color: var(--main-text-color);
 }
+#fab{
+    position: fixed;
+    right: 10px;
+    bottom: 70px;
+    background:  var(--toolbar-color);
+    color: white;
+    z-index: 999;
+}
 @media(prefers-color-scheme: dark){
     :root {
         --background-color: #555555;
