@@ -101,3 +101,26 @@ body {
         --content-color: #777777;
     }
 }
+
+#rosefireButton {
+    display: block;
+    margin: 30px auto;
+    color: white;
+    background: #800000;
+    font-size: 1.1em;
+    padding: 10px 30px;
+    border-radius: 5px;
+}
+
+#loginPage {
+    text-align: center;
+}
+
+#logo {
+    width: 128px;
+    height: 128px;
+}
+
+#signinText {
+    margin: 0;
+}
