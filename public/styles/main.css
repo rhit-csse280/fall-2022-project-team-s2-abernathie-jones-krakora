@@ -69,8 +69,8 @@ body {
     display: flex;
     justify-content: flex-start;
 }
-#calendar-header div{
-    width: 14%;
+.calendar-header{
+    width: calc((100%/7) - 2px);
     margin: 1px;
     text-align: center;
     background: var(--toolbar-color);
@@ -81,16 +81,16 @@ body {
     justify-content: flex-start;
 }
 #calendar-spacer{
-    width: 28%;
+    width: calc(2*((100%/7) - 2px));
     height: 1px;
     margin: 2px;
 }
 #calendar .card{
-    width: 14%;
+    width: calc((100%/7) - 2px);
     margin: 1px;
 }
 .calendar-day {
-    padding: 5px;
+    width: calc((100%/7) - 2px);
 }
 @media(prefers-color-scheme: dark){
     :root {
