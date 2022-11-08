@@ -24,22 +24,24 @@ htmlToElement = (html) => {		// TODO: May need to copy this to the individual pa
 rhit.init = async () => {
 	if (document.querySelector("#editPage")) {
 		const { editMain } = await import("/public/scripts/editPage.js");
-		editMain();
+		editMain(rhit.assignmentManger);
 	}
 	if (document.querySelector("#calendarPage")) {
 		const { calendarMain } = await import("/public/scripts/calendarPage.js");
-		calendarMain();
+		calendarMain(rhit.AssignmentManager);
 	}
 	if (document.querySelector("#listPage")) {
 		const { listMain } = await import("/public/scripts/listPage.js");
-		listMain();
+		listMain(rhit.assignmentManger);
 	}
 }
-
+rhit.assignmentManager = class(){
+	//TODO: Implement this on pattern on MoveQuotes
+}
 /** Main */
 rhit.main = () => {
 	console.log("Ready");
-	init();	// TODO: do this only once authorized probably
+	rhit.init();	// TODO: do this only once authorized probably
 }
 
 rhit.main();
