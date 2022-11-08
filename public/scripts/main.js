@@ -124,7 +124,7 @@ rhit.FbAuthManager = class {
 	signIn() {
 		// let rfUser = null;
 
-		Rosefire.signIn("~need new code", (err, rfUser) => {
+		Rosefire.signIn("cfa5cbc7-dd88-4bd2-aa2c-e523d96a21a3", (err, rfUser) => {
 			if (err) {
 				console.log("Rosefire error!", err);
 				return;
