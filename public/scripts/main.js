@@ -13,6 +13,9 @@ rhit.FB_COLLECTION_USERS = "Users";
 rhit.FB_KEY_NAME = "name";
 rhit.FB_KEY_PHOTO_URL = "photoUrl";
 
+rhit.fbAuthManager = null;
+rhit.fbUserManager = null;
+
 /** Convert a string to an HTML template element */
 htmlToElement = (html) => {		// TODO: May need to copy this to the individual pages, if applicable
 	var template = document.createElement("template");
@@ -208,6 +211,21 @@ rhit.init = async () => {
 rhit.main = () => {
 	console.log("Ready");
 	init();	// TODO: do this only once authorized probably
+	rhit.fbAuthManager = new rhit.FbAuthManager();
+	rhit.fbUserManager = new rhit.FbUserManager();
+	rhit.fbAuthManager.beginListening(() => {
+		console.log("isSignedIn = ", rhit.fbAuthManager.isSignedIn);
+		rhit.createUserObjectIfNeeded().then((isUserNew) => {
+			console.log('isUserNew :>> ', isUserNew);
+			if(isUserNew) {
+				window.location.href = "/list.html";
+				return;
+			}
+			rhit.checkForRedirects();
+			rhit.initializePage();
+		});
+		
+	});
 }
 
 rhit.main();
