@@ -36,8 +36,8 @@ class EditController {
 		oldCalendar.parentElement.appendChild(newCalendar);
 		oldCalendar.remove();
 
-		document.querySelector("#calendar-spacer").style.width = `calc(${offset}*((100%/7) - 2px))`;
-		document.querySelector("#calendar-spacer").style.margin = `${offset}px`;
+		document.querySelector("#ed-calendar-spacer").style.width = `calc(${offset}*((100%/7) - 2px))`;
+		document.querySelector("#ed-calendar-spacer").style.margin = `${offset}px`;
 	}
 	_htmlToElement = (html) => {		// TODO: May need to copy this to the individual pages, if applicable
 		var template = document.createElement("template");
