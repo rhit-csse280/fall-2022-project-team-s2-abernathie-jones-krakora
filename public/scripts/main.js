@@ -210,7 +210,6 @@ rhit.init = async () => {
 rhit.main = () => {
 	console.log("Ready");
 	rhit.init();	// TODO: do this only once authorized probably
-	init();	// TODO: do this only once authorized probably
 	rhit.fbAuthManager = new rhit.FbAuthManager();
 	rhit.fbUserManager = new rhit.FbUserManager();
 	rhit.fbAuthManager.beginListening(() => {

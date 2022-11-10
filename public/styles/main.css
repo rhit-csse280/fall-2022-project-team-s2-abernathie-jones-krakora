@@ -80,11 +80,6 @@ body {
     flex-wrap: wrap;
     justify-content: flex-start;
 }
-#calendar-spacer{
-    width: calc(2*((100%/7) - 2px));
-    height: 1px;
-    margin: 2px;
-}
 #calendar .card{
     width: calc((100%/7) - 2px);
     margin: 1px;
