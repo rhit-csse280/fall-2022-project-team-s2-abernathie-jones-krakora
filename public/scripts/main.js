@@ -12,9 +12,14 @@ var rhit = rhit || {};
 rhit.FB_COLLECTION_USERS = "Users";
 rhit.FB_KEY_NAME = "name";
 rhit.FB_KEY_PHOTO_URL = "photoUrl";
+rhit.FB_KEY_ASSNAME = "assName";
+rhit.FB_KEY_ASSSUB = "assSub";
+rhit.FB_KEY_ASSDATE = "assDate";
 
 rhit.fbAuthManager = null;
 rhit.fbUserManager = null;
+rhit.fbAssManager = null;
+rhit.fbMultiAssManager = null;
 
 /** Convert a string to an HTML template element */
 htmlToElement = (html) => {		// TODO: May need to copy this to the individual pages, if applicable
@@ -190,29 +195,156 @@ rhit.FbAuthManager = class {
 		return this._photoUrl || this._user.photoUrl;
 	}
 }
+rhit.FbAssManager = class {
+	constructor(assID) {
+	  this._documentSnapshot = {};
+	  this._unsubscribe = null;
+	  this._ref = firebase.firestore().collection(rhit.FB_COLLECTION_USERS).doc(assID);
+	  console.log(`Listening to ${this._ref.path}`)
+	}
+	beginListening(changeListener) {
+		this._unsubscribe = this._ref.onSnapshot((doc) =>{
+			if (doc.exists) {
+				console.log("Document data:", doc.data());
+				this._documentSnapshot = doc;
+				changeListener();
+			} else {
+				// doc.data() will be undefined in this case
+				console.log("No such document!");
+			}
+		
+		});
+	}
+	stopListening() {
+	  this._unsubscribe();
+	}
+	update(name, subject) {
+		this._ref.update({
+			[rhit.FB_KEY_ASSNAME]: name,
+			[rhit.FB_KEY_ASSSUB]: subject,
+			[rhit.FB_KEY_ASSDATE]: firebase.firestore.Timestamp.toDate(),
+		})
+		.then(() => {
+			console.log("Document updated!");
+		})
+		.catch((error) => {
+			console.error("Error adding document: ", error);
+		});
+	}
+	delete() {
+		return this._ref.delete()
+	}
 
+	get name() {
+		return this._documentSnapshot.get(rhit.FB_KEY_ASSNAME);
+	}
+	get sub() {
+		return this._documentSnapshot.get(rhit.FB_KEY_ASSSUB);
+	}
+	get date() {
+		return this._documentSnapshot.get(rhit.FB_KEY_ASSDATE);
+	}
+	get author(){
+		return this._documentSnapshot.get(rhit.FB_KEY_AUTHOR);
+	}
+}
+rhit.FbMultiAssManager = class {
+	constructor(uid) {
+		console.log("Manager exists");
+		this._uid = uid;
+		this._documentSnapshots = [];
+		this._ref = firebase.firestore().collection(rhit.FB_COLLECTION_USERS);
+		this._unsubscribe = null;
+	  };
+	  add(name, subject) {
+		this._ref.add({
+			[rhit.FB_KEY_ASSNAME]: name,
+			[rhit.FB_KEY_ASSSUB]: subject,
+			[rhit.FB_KEY_ASSDATE]: firebase.firestore.Timestamp.toDate(),
+			[rhit.FB_KEY_AUTHOR]: rhit.fbAuthManager.uid,
+		})
+		.then((docRef) => {
+			console.log("Document written with ID: ", docRef.id);
+		})
+		.catch((error) => {
+			console.error("Error adding document: ", error);
+		});
+
+		console.log(` Dodad added as: ${name} ${subject}`);
+	  };
+	  beginListening(changeListener) {
+		let query = this._ref.orderBy(rhit.FB_KEY_ASSDATE, "desc").limit(24);
+		if(this._uid) {
+			query = query.where(rhit.FB_KEY_AUTHOR, "==", this._uid);
+		}
+		this._unsubscribe = query
+		.onSnapshot((querySnapshot) => {
+
+			this._documentSnapshots = querySnapshot.docs;
+			// querySnapshot.forEach((doc) => {
+			// 	console.log(doc.data());
+			// });
+			changeListener();
+		});
+	  };
+	  stopListening() {
+		this._unsubscribe();
+	  };
+	  update(id, name, subject) {
+
+	  };
+	  delete(id) {
+
+	  };
+	  get length() {
+		return this._documentSnapshots.length;
+	  };
+	  get uid() {
+		return this._uid;
+	  };
+	  getMovieQuoteAtIndex(index) {
+		  const documentSnapshot = this._documentSnapshots[index];
+		const mq = new rhit.Ass(
+			documentSnapshot.id,
+			documentSnapshot.get(rhit.FB_KEY_ASSNAME),
+			documentSnapshot.get(rhit.FB_KEY_ASSSUB),
+			documentSnapshot.get(rhit.FB_KEY_ASSDATE),
+		);
+		return mq;
+	  };
+	 
+}
+rhit.Ass = class {
+	constructor(id, name, subject, date) {
+		this.id = id;
+		this.name = name;
+		this.subject = subject;
+		this.date = date;  
+	}
+}
 /** Initialize the code for whichever page the user is on */
 rhit.init = async () => {
 	if (document.querySelector("#editPage")) {
 		const { editMain } = await import("/public/scripts/editPage.js");
-		editMain(rhit.assignmentManger);
+		editMain(rhit.fbAuthManager, rhit.fbAssManager, rhit.fbMultiAssManager);
 	}
 	if (document.querySelector("#calendarPage")) {
 		const { calendarMain } = await import("/public/scripts/calendarPage.js");
-		calendarMain(rhit.AssignmentManager);
+		calendarMain(rhit.fbAuthManager, rhit.fbAssManager, rhit.fbMultiAssManager);
 	}
 	if (document.querySelector("#listPage")) {
 		const { listMain } = await import("/public/scripts/listPage.js");
-		listMain(rhit.assignmentManger);
+		listMain(rhit.fbAuthManager, rhit.fbAssManager, rhit.fbMultiAssManager);
 	}
 }
 /** Main */
 rhit.main = () => {
 	console.log("Ready");
 	rhit.init();	// TODO: do this only once authorized probably
-	init();	// TODO: do this only once authorized probably
 	rhit.fbAuthManager = new rhit.FbAuthManager();
 	rhit.fbUserManager = new rhit.FbUserManager();
+	rhit.fbAssManager = new rhit.FbAssManager();
+	rhit.fbMultiAssManager = new rhit.FbMultiAssManager();
 	rhit.fbAuthManager.beginListening(() => {
 		console.log("isSignedIn = ", rhit.fbAuthManager.isSignedIn);
 		rhit.createUserObjectIfNeeded().then((isUserNew) => {
