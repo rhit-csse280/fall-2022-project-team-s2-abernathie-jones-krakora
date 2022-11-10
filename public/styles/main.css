@@ -61,31 +61,33 @@ body {
     color: white;
     z-index: 999;
 }
-#calendar-title{
+#ed-calendar-title{
     font-size: 2em;
     text-align: center;
 }
-#calendar-header{
+#ed-calendar-header{
     display: flex;
     justify-content: flex-start;
 }
-.calendar-header{
+.ed-calendar-header{
     width: calc((100%/7) - 2px);
     margin: 1px;
     text-align: center;
     background: var(--toolbar-color);
 }
-#calendar{
+#ed-calendar{
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
 }
-#calendar .card{
+#ed-calendar-spacer{
+    width: calc(2*((100%/7) - 2px));
+    height: 1px;
+    margin: 2px;
+}
+#ed-calendar .card{
     width: calc((100%/7) - 2px);
     margin: 1px;
-}
-.calendar-day {
-    width: calc((100%/7) - 2px);
 }
 @media(prefers-color-scheme: dark){
     :root {

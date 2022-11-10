@@ -13,16 +13,16 @@ class EditController {
 		this._createCalendar(30, 1);
 	}
 	_createCalendar = (numDays, offset)=> {	// TODO: Create calendar and add to document
-		const oldCalendar = document.querySelector("#calendar");
-		const newCalendar = this._htmlToElement(`<div id="calendar">
-				<div class="calendar-header">Sunday</div>
-				<div class="calendar-header">Monday</div>
-				<div class="calendar-header">Tuesday</div>
-            	<div class="calendar-header">Wednesday</div>
-            	<div class="calendar-header">Thursday</div>
-            	<div class="calendar-header">Friday</div>
-            	<div class="calendar-header">Saturday</div>
-            	<div id="calendar-spacer"></div>
+		const oldCalendar = document.querySelector("#ed-calendar");
+		const newCalendar = this._htmlToElement(`<div id="ed-calendar">
+				<div class="ed-calendar-header">Sunday</div>
+				<div class="ed-calendar-header">Monday</div>
+				<div class="ed-calendar-header">Tuesday</div>
+            	<div class="ed-calendar-header">Wednesday</div>
+            	<div class="ed-calendar-header">Thursday</div>
+            	<div class="ed-calendar-header">Friday</div>
+            	<div class="ed-calendar-header">Saturday</div>
+            	<div id="ed-calendar-spacer"></div>
 			</div>`);
 		for(let i=1; i<=numDays; i++) {
 			const card = this._htmlToElement(`
