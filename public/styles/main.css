@@ -127,3 +127,7 @@ body {
 .modal{
     background-color: rgba(10,10,10,0.45);
 }
+
+.modal-content {
+    background-color: var(--content-color)
+}
