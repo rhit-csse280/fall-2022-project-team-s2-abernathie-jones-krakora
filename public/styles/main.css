@@ -121,3 +121,9 @@ body {
 #signinText {
     margin: 0;
 }
+.modal-backdrop {
+    display:none;
+}
+.modal{
+    background-color: rgba(10,10,10,0.45);
+}
