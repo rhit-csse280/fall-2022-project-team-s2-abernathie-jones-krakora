@@ -7,8 +7,16 @@
  */
 
 /** Edit Page Controller */
+fbAuthManager = null;
+fbAssManager = null;
+fbMultiAssManager = null;
+
+
 class EditController {
-	constructor() {
+	constructor(auth, ass, mAss) {
+		fbAuthManager = auth;
+		fbAssManager = ass;
+		fbMultiAssManager = mAss;
 		console.log("edit mode");
 		this._createCalendar(30, 1);
 	}
