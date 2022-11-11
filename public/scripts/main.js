@@ -109,7 +109,16 @@ rhit.FbUserManager = class {
 		return this._document.get(rhit.FB_KEY_PHOTO_URL); 
 	}
 }
+rhit.LoginPageController = class {
+	constructor() {
+		console.log("Created Login page controller");
+		document.querySelector("#rosefireButton").addEventListener("click", (event) =>{
+			rhit.fbAuthManager.signIn();
+		});
+		rhit.fbAuthManager.startFirebaseUI();
 
+	}
+}
 // TODO: write authorization code
 rhit.FbAuthManager = class {
 	constructor() {
@@ -304,13 +313,13 @@ rhit.FbMultiAssManager = class {
 	  };
 	  getMovieQuoteAtIndex(index) {
 		  const documentSnapshot = this._documentSnapshots[index];
-		const mq = new rhit.Ass(
+		const ass = new rhit.Ass(
 			documentSnapshot.id,
 			documentSnapshot.get(rhit.FB_KEY_ASSNAME),
 			documentSnapshot.get(rhit.FB_KEY_ASSSUB),
 			documentSnapshot.get(rhit.FB_KEY_ASSDATE),
 		);
-		return mq;
+		return ass;
 	  };
 	 
 }
@@ -322,29 +331,62 @@ rhit.Ass = class {
 		this.date = date;  
 	}
 }
+rhit.checkForRedirects = function(){
+	if(document.querySelector("#loginPage") && rhit.fbAuthManager.isSignedIn){
+		window.location.href = "/list.html"
+	}
+	if(!document.querySelector("#loginPage") && !rhit.fbAuthManager.isSignedIn){
+		window.location.href = "/"
+	}
+	
+	};
 /** Initialize the code for whichever page the user is on */
 rhit.init = async () => {
-	if (document.querySelector("#editPage")) {
-		const { editMain } = await import("/public/scripts/editPage.js");
-		editMain(rhit.fbAuthManager, rhit.fbAssManager, rhit.fbMultiAssManager);
+	const urlParams = new URLSearchParams(window.location.search);
+	if(document.querySelector("#loginPage")) {
+		new rhit.LoginPageController()
+	} else {
+		const uid = urlParams.get("uid");
+		rhit.fbMultiAssManager = new rhit.FbMultiAssManager(uid);
+		if (document.querySelector("#editPage")) {
+			const { editMain } = await import("/public/scripts/editPage.js");
+			editMain(rhit.fbAuthManager, rhit.fbMultiAssManager);
+		}
+		if (document.querySelector("#calendarPage")) {
+			const { calendarMain } = await import("/public/scripts/calendarPage.js");
+			calendarMain(rhit.fbAuthManager, rhit.fbMultiAssManager);
+		}
+		if (document.querySelector("#listPage")) {
+			const { listMain } = await import("/public/scripts/listPage.js");
+			listMain(rhit.fbAuthManager, rhit.fbMultiAssManager);
+		}
 	}
-	if (document.querySelector("#calendarPage")) {
-		const { calendarMain } = await import("/public/scripts/calendarPage.js");
-		calendarMain(rhit.fbAuthManager, rhit.fbAssManager, rhit.fbMultiAssManager);
-	}
-	if (document.querySelector("#listPage")) {
-		const { listMain } = await import("/public/scripts/listPage.js");
-		listMain(rhit.fbAuthManager, rhit.fbAssManager, rhit.fbMultiAssManager);
-	}
+	
 }
+rhit.createUserObjectIfNeeded = function(){
+	return new Promise((resolve, reject) => {
+		if(!rhit.fbAuthManager.isSignedIn){
+			resolve(false);
+			return;
+		}
+		if(!document.querySelector("#LoginPage")){
+			resolve(false);
+			return;
+		}
+		rhit.fbUserManager.addNewUserMaybe(
+			rhit.fbAuthManager.uid,
+			rhit.fbAuthManager.name,
+			rhit.fbAuthManager.photoUrl,
+		).then((isUserNew) => {
+			resolve(isUserNew);
+		});
+	})
+};
 /** Main */
 rhit.main = () => {
 	console.log("Ready");
-	rhit.init();	// TODO: do this only once authorized probably
 	rhit.fbAuthManager = new rhit.FbAuthManager();
 	rhit.fbUserManager = new rhit.FbUserManager();
-	rhit.fbAssManager = new rhit.FbAssManager();
-	rhit.fbMultiAssManager = new rhit.FbMultiAssManager();
 	rhit.fbAuthManager.beginListening(() => {
 		console.log("isSignedIn = ", rhit.fbAuthManager.isSignedIn);
 		rhit.createUserObjectIfNeeded().then((isUserNew) => {
@@ -353,8 +395,9 @@ rhit.main = () => {
 				window.location.href = "/list.html";
 				return;
 			}
+			
 			rhit.checkForRedirects();
-			rhit.initializePage();
+			rhit.init();
 		});
 		
 	});

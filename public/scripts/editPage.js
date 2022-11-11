@@ -13,9 +13,8 @@ fbMultiAssManager = null;
 
 
 class EditController {
-	constructor(auth, ass, mAss) {
+	constructor(auth, mAss) {
 		fbAuthManager = auth;
-		fbAssManager = ass;
 		fbMultiAssManager = mAss;
 		console.log("edit mode");
 		this._createCalendar(30, 1);

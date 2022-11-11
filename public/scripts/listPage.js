@@ -14,9 +14,8 @@ fbMultiAssManager = null;
 
 
 class ListController {
-	constructor(auth, ass, mAss) {
+	constructor(auth, mAss) {
 		fbAuthManager = auth;
-		fbAssManager = ass;
 		fbMultiAssManager = mAss;
 		console.log("list mode");
 		document.querySelector("#fab").addEventListener("click", (event) => {
