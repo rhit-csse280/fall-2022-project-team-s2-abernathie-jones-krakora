@@ -8,15 +8,11 @@
 
 
 /** List Page Controller */
-fbAuthManager = null;
-fbAssManager = null;
-fbMultiAssManager = null;
-
 
 class ListController {
 	constructor(auth, mAss) {
-		fbAuthManager = auth;
-		fbMultiAssManager = mAss;
+		const fbAuthManager = auth;
+		const fbMultiAssManager = mAss;
 		console.log("list mode");
 		document.querySelector("#fab").addEventListener("click", (event) => {
 			this.updateList();
@@ -43,3 +39,5 @@ class ListController {
 	  </div>`)
 	}
 }
+
+export { ListController };
