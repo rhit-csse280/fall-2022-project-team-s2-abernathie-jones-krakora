@@ -70,7 +70,6 @@ body {
 
 .navbar {
     background-color: var(--toolbar-color);
-    /* color: tool;    What????? */
 }
 
 .navbar-brand {
@@ -98,6 +97,11 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+}
+
+#ed-calendar .card {
+    width: calc((100%/7) - 2px);
+    margin: 1px;
 }
 
 .ed-calendar-header {
