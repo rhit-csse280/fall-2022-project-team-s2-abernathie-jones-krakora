@@ -15,6 +15,7 @@ class EditController {
 		const fbMultiAssManager = mAss;
 		console.log("edit mode");
 		this._createCalendar(30, 1);
+
 	}
 	_createCalendar = (numDays, offset)=> {
 		const oldCalendar = document.querySelector("#ed-calendar");
@@ -29,8 +30,14 @@ class EditController {
             	<div id="ed-calendar-spacer"></div>
 			</div>`);
 		for(let i=1; i<=numDays; i++) {
+			let day = null;
+			if(i < 10){
+				day = "0"+i;
+			}else {
+				day = i;
+			}
 			const card = this._htmlToElement(`
-			<div data-date="${i}" class="card">
+			<div onclick = 'window.location.href = "/detail.html?date=202211${day}&weekday=${(offset + i)%7};"' data-date="${day}" class="card">
 				<div class="card-body">
 					${i}
 				</div>
