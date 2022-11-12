@@ -14,30 +14,25 @@ class ListController {
 		const fbAuthManager = auth;
 		const fbMultiAssManager = mAss;
 		console.log("list mode");
-		document.querySelector("#fab").addEventListener("click", (event) => {
+		document.querySelector("#fab").addEventListener("click", event => {
 			this.updateList();
 		});
 	}
 
 	updateList() {
 		const newList = htmlToElement('<div id="calendarPage" class="container page-container"></div>');
-
 		for(let i = 0; i < rhit.fbMultiAssManager.length; i++) {
 			const ass = rhit.fbMultiAssManager.getAssAtIndex(i);
 			const newCard = this._createCard(ass);
-
 			newList.appendChild(newCard);
 		}
-
 		const oldList = document.querySelector("#dayList");
-		oldList.removeAttribute("id");
-		oldList.hidden = true;
-
 		oldList.parentElement.appendChild(newList);
+		oldList.remove();
 	};
 
 	_createElement(todoItem) {
-		return htmlToElement(`<div class="card">
+		return _htmlToElement(`<div class="card">
 		<div class="card-body">
 		  <div class="form-check">
 			<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
@@ -46,7 +41,12 @@ class ListController {
 			</label>
 		  </div>
 		</div>
-	  </div>`)
+	  </div>`);
+	}
+	_htmlToElement(html) {
+		const template = document.createElement("template");
+		template.innerHTML = html.trim();
+		return template.content.firstChild;
 	}
 }
 

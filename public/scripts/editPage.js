@@ -6,6 +6,7 @@
  * Corwin Jones, Allison Abernathie, Larissa Krakora
  */
 
+
 /** Edit Page Controller */
 
 class EditController {
@@ -15,7 +16,7 @@ class EditController {
 		console.log("edit mode");
 		this._createCalendar(30, 1);
 	}
-	_createCalendar = (numDays, offset)=> {	// TODO: Create calendar and add to document
+	_createCalendar = (numDays, offset)=> {
 		const oldCalendar = document.querySelector("#ed-calendar");
 		const newCalendar = this._htmlToElement(`<div id="ed-calendar">
 				<div class="ed-calendar-header">Sunday</div>
@@ -38,12 +39,11 @@ class EditController {
 		}
 		oldCalendar.parentElement.appendChild(newCalendar);
 		oldCalendar.remove();
-
 		document.querySelector("#ed-calendar-spacer").style.width = `calc(${offset}*((100%/7) - 2px))`;
 		document.querySelector("#ed-calendar-spacer").style.margin = `${offset}px`;
 	}
-	_htmlToElement = (html) => {		// TODO: May need to copy this to the individual pages, if applicable
-		var template = document.createElement("template");
+	_htmlToElement (html) {
+		const template = document.createElement("template");
 		template.innerHTML = html.trim();
 		return template.content.firstChild;
 	}

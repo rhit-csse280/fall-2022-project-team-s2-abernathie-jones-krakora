@@ -9,6 +9,7 @@
 /** Namespace */
 var rhit = rhit || {};
 
+/** Firebase keys */
 rhit.FB_COLLECTION_USERS = "Users";
 rhit.FB_KEY_NAME = "name";
 rhit.FB_KEY_PHOTO_URL = "photoUrl";
@@ -16,30 +17,41 @@ rhit.FB_KEY_ASSNAME = "assName";
 rhit.FB_KEY_ASSSUB = "assSub";
 rhit.FB_KEY_ASSDATE = "assDate";
 
+/** Singleton objects */
 rhit.fbAuthManager = null;
 rhit.fbUserManager = null;
 rhit.fbAssManager = null;
 rhit.fbMultiAssManager = null;
 
 /** Convert a string to an HTML template element */
-htmlToElement = (html) => {		// TODO: May need to copy this to the individual pages, if applicable
-	var template = document.createElement("template");
-	template.innerHTML = html.trim();
-	return template.content.firstChild;
+// htmlToElement = (html) => {
+// 	var template = document.createElement("template");
+// 	template.innerHTML = html.trim();
+// 	return template.content.firstChild;
+// }
+
+/** Assignment object */
+rhit.Ass = class {
+	constructor(id, name, subject, date) {
+		this.id = id;
+		this.name = name;
+		this.subject = subject;
+		this.date = date;
+	}
 }
 
-// TODO: write authentication code
+/** Firebase User Manager */
 rhit.FbUserManager = class {
 	constructor() {
-	  this._collectionRef = firebase.firestore().collection(rhit.FB_COLLECTION_USERS);
-	  this._document = null;
-	  this._unsubscribe = null;
-	  console.log("created user manager");
+		this._collectionRef = firebase.firestore().collection(rhit.FB_COLLECTION_USERS);
+		this._document = null;
+		this._unsubscribe = null;
+		console.log("created user manager");
 	}
-	addNewUserMaybe(uid, name, photoUrl) {
+	addNewUserMaybe(uid, name, photoUrl) {	// Add new user, if one doesn't already exist
 		const userRef = this._collectionRef.doc(uid);
-		return userRef.get().then((doc) => {
-			if(doc.exists) {
+		return userRef.get().then(doc => {
+			if (doc.exists) {
 				console.log("Doc data", doc.data());
 				return false;
 			} else {
@@ -47,79 +59,50 @@ rhit.FbUserManager = class {
 				return userRef.set({
 					[rhit.FB_KEY_NAME]: name,
 					[rhit.FB_KEY_PHOTO_URL]: photoUrl
-				}).then(function () {
+				}).then(() => {
 					console.log("success");
 					return true;
-				}).catch(function (error) {
-					console.log("error:", error);
-				})
+				}).catch(error => { console.log("error:", error); })
 			}
-		}).catch(function (error) {
-			console.log("error getting doc", error);
-		});
+		}).catch(error => { console.log("error getting doc", error); });
 	}
 	beginListening(uid, changeListener) {
 		const userRef = this._collectionRef.doc(uid);
-		
 		this._unsubscribe = userRef.onSnapshot((doc) => {
-			if(doc.exists) {
+			if (doc.exists) {
 				this._document = doc;
 				changeListener();
-			} else {
-				console.log("No user!");
-			}
+			} else console.log("No user!");
 		});
 	}
-	stopListening() {
-		this._unsubscribe();
-	}
-
-	get isListening() {
-		return !!this._unsubscribe;
-	}
-
+	stopListening() { this._unsubscribe(); }
 	updatePhotoUrl(photoUrl) {
 		const userRef = this._collectionRef.doc(rhit.fbAuthManager.uid);
-		userRef.update({
-			[rhit.FB_KEY_PHOTO_URL]: photoUrl,
-		})
-		.then(() => {
-			console.log("update success");
-		})
-		.catch(function (error) {
-			console.error("update error: ", error);
-		});
+		userRef.update({ [rhit.FB_KEY_PHOTO_URL]: photoUrl, })
+			.then(() => { console.log("update success");})
+			.catch(error => { console.error("update error: ", error); });
 	}
 	updateName(name) {
 		const userRef = this._collectionRef.doc(rhit.fbAuthManager.uid);
-		return userRef.update({
-			[rhit.FB_KEY_NAME]: name,
-		})
-		.then(() => {
-			console.log("success");
-		})
-		.catch(function (error) {
-			console.error("error ", error);
-		});
+		return userRef.update({ [rhit.FB_KEY_NAME]: name, })
+			.then(() => { console.log("success"); })
+			.catch(error => { console.error("error ", error); });
 	}
-	get name() {   
-		return this._document.get(rhit.FB_KEY_NAME); 
-	}
-	get photoUrl() {   
-		return this._document.get(rhit.FB_KEY_PHOTO_URL); 
-	}
+	get name() { return this._document.get(rhit.FB_KEY_NAME); }
+	get photoUrl() { return this._document.get(rhit.FB_KEY_PHOTO_URL); }
+	get isListening() { return !!this._unsubscribe; }
 }
+
+/** Login page controller */
 rhit.LoginPageController = class {
 	constructor() {
 		console.log("Created Login page controller");
-		document.querySelector("#rosefireButton").addEventListener("click", (event) =>{
-			rhit.fbAuthManager.signIn();
-		});
+		document.querySelector("#rosefireButton").addEventListener("click", event => { rhit.fbAuthManager.signIn();	});
 		rhit.fbAuthManager.startFirebaseUI();
-
 	}
 }
-// TODO: write authorization code
+
+/** Manages login state, I think???? */
 rhit.FbAuthManager = class {
 	constructor() {
 		this._user = null;
@@ -127,20 +110,14 @@ rhit.FbAuthManager = class {
 		this._photoUrl = "";
 		console.log("You have made the Auth Manager.");
 	}
-
 	beginListening(changeListener) {
-		firebase.auth().onAuthStateChanged((user) => {
-
+		firebase.auth().onAuthStateChanged(user => {
 			this._user = user;
 			changeListener();
 		});
-
-		
 	}
-
 	signIn() {
 		// let rfUser = null;
-
 		Rosefire.signIn("cfa5cbc7-dd88-4bd2-aa2c-e523d96a21a3", (err, rfUser) => {
 			if (err) {
 				console.log("Rosefire error!", err);
@@ -149,31 +126,21 @@ rhit.FbAuthManager = class {
 			console.log("Rosefire success!", rfUser);
 			this._name = rfUser.name;
 			console.log("Set name to ", this._name);
-
 			firebase.auth().signInWithCustomToken(rfUser.token).then((userCredential) => {
 				// Signed in
 				this._user = userCredential.user;
 				console.log("customtoken", rfUser);
 				// ...
-			  }).catch((error) => {
+			}).catch((error) => {
 				const errorCode = error.code;
 				const errorMessage = error.message;
-				if(errorCode === 'auth/invalid-custom-token') {
-					alert('The token you provided is not valid.');
-				} else {
-					console.error("Custom auth error", errorCode, errorMessage);
-				}
+				if (errorCode === 'auth/invalid-custom-token') alert('The token you provided is not valid.');
+				else console.error("Custom auth error", errorCode, errorMessage);
 			});
 		});
 	}
-
-	signOut() {
-		firebase.auth().signOut().catch((error) => {
-			console.log("Sign out error");
-		});
-	}
-
-	startFirebaseUI = function () {
+	signOut() { firebase.auth().signOut().catch(error => { console.error("Sign out error"); });	}
+	startFirebaseUI() {
 		var uiConfig = {
 			signInSuccessUrl: '/',
 			signInOptions: [
@@ -183,80 +150,50 @@ rhit.FbAuthManager = class {
 				firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID,
 			]
 		};
-
 		const ui = new firebaseui.auth.AuthUI(firebase.auth());
 		ui.start('#firebaseui-auth-container', uiConfig);
 	}
-
-	get isSignedIn() {
-		return !!this._user;
-	}
-
-	get uid() {
-		return this._user.uid;
-	}
-
-	get name() {
-		return this._name || this._user.displayName;
-	}
-
-	get photoUrl() {
-		return this._photoUrl || this._user.photoUrl;
-	}
+	get isSignedIn() { return !!this._user; }
+	get uid() { return this._user.uid; }
+	get name() { return this._name || this._user.displayName; }
+	get photoUrl() { return this._photoUrl || this._user.photoUrl; }
 }
+
+/** Asignment manager for single assignments */
 rhit.FbAssManager = class {
 	constructor(assID) {
-	  this._documentSnapshot = {};
-	  this._unsubscribe = null;
-	  this._ref = firebase.firestore().collection(rhit.FB_COLLECTION_USERS).doc(assID);
-	  console.log(`Listening to ${this._ref.path}`)
+		this._documentSnapshot = {};
+		this._unsubscribe = null;
+		this._ref = firebase.firestore().collection(rhit.FB_COLLECTION_USERS).doc(assID);
+		console.log(`Listening to ${this._ref.path}`)
 	}
 	beginListening(changeListener) {
-		this._unsubscribe = this._ref.onSnapshot((doc) =>{
+		this._unsubscribe = this._ref.onSnapshot(doc => {
 			if (doc.exists) {
 				console.log("Document data:", doc.data());
 				this._documentSnapshot = doc;
 				changeListener();
-			} else {
-				// doc.data() will be undefined in this case
-				console.log("No such document!");
-			}
-		
+			} else console.log("No such document!"); // doc.data() will be undefined in this case
 		});
 	}
-	stopListening() {
-	  this._unsubscribe();
-	}
+	stopListening() { this._unsubscribe(); }
 	update(name, subject) {
 		this._ref.update({
 			[rhit.FB_KEY_ASSNAME]: name,
 			[rhit.FB_KEY_ASSSUB]: subject,
 			[rhit.FB_KEY_ASSDATE]: firebase.firestore.Timestamp.toDate(),
 		})
-		.then(() => {
-			console.log("Document updated!");
-		})
-		.catch((error) => {
-			console.error("Error adding document: ", error);
-		});
+			.then(() => { console.log("Document updated!"); })
+			.catch(error => { console.error("Error adding document: ", error); });
 	}
-	delete() {
-		return this._ref.delete()
-	}
-
-	get name() {
-		return this._documentSnapshot.get(rhit.FB_KEY_ASSNAME);
-	}
-	get sub() {
-		return this._documentSnapshot.get(rhit.FB_KEY_ASSSUB);
-	}
-	get date() {
-		return this._documentSnapshot.get(rhit.FB_KEY_ASSDATE);
-	}
-	get author(){
-		return this._documentSnapshot.get(rhit.FB_KEY_AUTHOR);
-	}
+	delete() { return this._ref.delete() }
+	get name() { return this._documentSnapshot.get(rhit.FB_KEY_ASSNAME); }
+	get sub() { return this._documentSnapshot.get(rhit.FB_KEY_ASSSUB); }
+	get date() { return this._documentSnapshot.get(rhit.FB_KEY_ASSDATE); }
+	get author() { return this._documentSnapshot.get(rhit.FB_KEY_AUTHOR); }
 }
+
+/** Assignment manager for lists of assignments */
 rhit.FbMultiAssManager = class {
 	constructor(uid) {
 		console.log("Manager exists");
@@ -264,55 +201,35 @@ rhit.FbMultiAssManager = class {
 		this._documentSnapshots = [];
 		this._ref = firebase.firestore().collection(rhit.FB_COLLECTION_USERS);
 		this._unsubscribe = null;
-	  };
-	  add(name, subject) {
+	}
+	add(name, subject) {
 		this._ref.add({
 			[rhit.FB_KEY_ASSNAME]: name,
 			[rhit.FB_KEY_ASSSUB]: subject,
 			[rhit.FB_KEY_ASSDATE]: firebase.firestore.Timestamp.toDate(),
 			[rhit.FB_KEY_AUTHOR]: rhit.fbAuthManager.uid,
 		})
-		.then((docRef) => {
-			console.log("Document written with ID: ", docRef.id);
-		})
-		.catch((error) => {
-			console.error("Error adding document: ", error);
-		});
-
+			.then(docRef => { console.log("Document written with ID: ", docRef.id); })
+			.catch(error => { console.error("Error adding document: ", error); });
 		console.log(` Dodad added as: ${name} ${subject}`);
-	  };
-	  beginListening(changeListener) {
+	}
+	beginListening(changeListener) {
 		let query = this._ref.orderBy(rhit.FB_KEY_ASSDATE, "desc").limit(24);
-		if(this._uid) {
-			query = query.where(rhit.FB_KEY_AUTHOR, "==", this._uid);
-		}
+		if (this._uid) query = query.where(rhit.FB_KEY_AUTHOR, "==", this._uid);
 		this._unsubscribe = query
-		.onSnapshot((querySnapshot) => {
-
-			this._documentSnapshots = querySnapshot.docs;
-			// querySnapshot.forEach((doc) => {
-			// 	console.log(doc.data());
-			// });
-			changeListener();
-		});
-	  };
-	  stopListening() {
-		this._unsubscribe();
-	  };
-	  update(id, name, subject) {
-
-	  };
-	  delete(id) {
-
-	  };
-	  get length() {
-		return this._documentSnapshots.length;
-	  };
-	  get uid() {
-		return this._uid;
-	  };
-	  getMovieQuoteAtIndex(index) {
-		  const documentSnapshot = this._documentSnapshots[index];
+			.onSnapshot(querySnapshot => {
+				this._documentSnapshots = querySnapshot.docs;
+				// querySnapshot.forEach((doc) => {
+				// 	console.log(doc.data());
+				// });
+				changeListener();
+			});
+	}
+	stopListening() { this._unsubscribe(); };
+	update(id, name, subject) { }	// TODO
+	delete(id) { }	// TODO
+	getAssAtIndex(index) {
+		const documentSnapshot = this._documentSnapshots[index];
 		const ass = new rhit.Ass(
 			documentSnapshot.id,
 			documentSnapshot.get(rhit.FB_KEY_ASSNAME),
@@ -320,32 +237,22 @@ rhit.FbMultiAssManager = class {
 			documentSnapshot.get(rhit.FB_KEY_ASSDATE),
 		);
 		return ass;
-	  };
-	 
+	}
+	get length() { return this._documentSnapshots.length; }
+	get uid() { return this._uid; }
 }
-rhit.Ass = class {
-	constructor(id, name, subject, date) {
-		this.id = id;
-		this.name = name;
-		this.subject = subject;
-		this.date = date;  
-	}
+
+/** Redirect if necessary */
+rhit.checkForRedirects = () => {
+	if (document.querySelector("#loginPage") && rhit.fbAuthManager.isSignedIn) window.location.href = "/list.html";
+	if (!document.querySelector("#loginPage") && !rhit.fbAuthManager.isSignedIn) window.location.href = "/";
 }
-rhit.checkForRedirects = function(){
-	if(document.querySelector("#loginPage") && rhit.fbAuthManager.isSignedIn){
-		window.location.href = "/list.html"
-	}
-	if(!document.querySelector("#loginPage") && !rhit.fbAuthManager.isSignedIn){
-		window.location.href = "/"
-	}
-	
-	};
+
 /** Initialize the code for whichever page the user is on */
 rhit.init = async () => {
 	const urlParams = new URLSearchParams(window.location.search);
-	if(document.querySelector("#loginPage")) {
-		new rhit.LoginPageController()
-	} else {
+	if (document.querySelector("#loginPage")) new rhit.LoginPageController();
+	else {
 		const uid = urlParams.get("uid");
 		rhit.fbMultiAssManager = new rhit.FbMultiAssManager(uid);
 		if (document.querySelector("#editPage")) {
@@ -366,15 +273,16 @@ rhit.init = async () => {
 			});
 		}
 	}
-	
 }
-rhit.createUserObjectIfNeeded = function(){
+
+/** Check if a user has just logged in, call the UserManager */
+rhit.createUserObjectIfNeeded = () => {
 	return new Promise((resolve, reject) => {
-		if(!rhit.fbAuthManager.isSignedIn){
+		if (!rhit.fbAuthManager.isSignedIn) {
 			resolve(false);
 			return;
 		}
-		if(!document.querySelector("#LoginPage")){
+		if (!document.querySelector("#loginPage")) {
 			resolve(false);
 			return;
 		}
@@ -382,11 +290,10 @@ rhit.createUserObjectIfNeeded = function(){
 			rhit.fbAuthManager.uid,
 			rhit.fbAuthManager.name,
 			rhit.fbAuthManager.photoUrl,
-		).then((isUserNew) => {
-			resolve(isUserNew);
-		});
-	})
-};
+		).then((isUserNew) => { resolve(isUserNew); });
+	});
+}
+
 /** Main */
 rhit.main = () => {
 	console.log("Ready");
@@ -396,16 +303,15 @@ rhit.main = () => {
 		console.log("isSignedIn = ", rhit.fbAuthManager.isSignedIn);
 		rhit.createUserObjectIfNeeded().then((isUserNew) => {
 			console.log('isUserNew :>> ', isUserNew);
-			if(isUserNew) {
-				window.location.href = "/list.html/?uid=${rhit.fdAuthManager}";
+			if (isUserNew) {
+				window.location.href = "/list.html";
 				return;
 			}
-			
 			rhit.checkForRedirects();
 			rhit.init();
 		});
-		
 	});
 }
 
+/** Call main */
 rhit.main();
