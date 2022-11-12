@@ -63,8 +63,3 @@ class CalendarController {
 	</div>`);
 	}
 }
-
-/** Calendar Page Main */
-export function calendarMain() {
-	const calendarController = new CalendarController();
-}

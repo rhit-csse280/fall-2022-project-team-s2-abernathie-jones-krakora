@@ -43,8 +43,3 @@ class ListController {
 	  </div>`)
 	}
 }
-
-/** List Page Main */
-export function listMain() {
-	const listController = new ListController();
-}
