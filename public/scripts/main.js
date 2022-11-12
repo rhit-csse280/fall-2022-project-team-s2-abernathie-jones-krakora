@@ -349,16 +349,21 @@ rhit.init = async () => {
 		const uid = urlParams.get("uid");
 		rhit.fbMultiAssManager = new rhit.FbMultiAssManager(uid);
 		if (document.querySelector("#editPage")) {
-			const { editMain } = await import("/public/scripts/editPage.js");
-			editMain(rhit.fbAuthManager, rhit.fbMultiAssManager);
+			import("./editPage.js").then((Module)=> {
+				const editor =  new Module.EditController(rhit.fbAuthManager, rhit.fbMultiAssManager);
+			});
 		}
 		if (document.querySelector("#calendarPage")) {
+			import("./calendarPage.js").then((Module)=> {
+				const calendar =  new Module.CalendarController(rhit.fbAuthManager, rhit.fbMultiAssManager);
+			});
 			const { calendarMain } = await import("/public/scripts/calendarPage.js");
 			calendarMain(rhit.fbAuthManager, rhit.fbMultiAssManager);
 		}
 		if (document.querySelector("#listPage")) {
-			const { listMain } = await import("/public/scripts/listPage.js");
-			listMain(rhit.fbAuthManager, rhit.fbMultiAssManager);
+			import("./listPage.js").then((Module)=> {
+				const list = new Module.ListController(rhit.fbAuthManager, rhit.fbMultiAssManager);
+			});
 		}
 	}
 	
@@ -392,7 +397,7 @@ rhit.main = () => {
 		rhit.createUserObjectIfNeeded().then((isUserNew) => {
 			console.log('isUserNew :>> ', isUserNew);
 			if(isUserNew) {
-				window.location.href = "/list.html";
+				window.location.href = "/list.html/?uid=${rhit.fdAuthManager}";
 				return;
 			}
 			
