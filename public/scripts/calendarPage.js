@@ -30,7 +30,22 @@ class CalendarController {
 		$("#addAssignmentDialog").on("shown.bs.modal", event => {
 			document.querySelector("#inputName").focus();
 		});
-		updateList();
+		const listItem = document.querySelector("#goToListPage");
+        if(listItem) {
+            document.querySelector("#goToListPage").addEventListener("click", (event) => {
+                window.location.href = "/list.html";
+                console.log("Go to list");
+            });
+        }
+        const calendarItem = document.querySelector("#goToCalendarPage");
+        if(calendarItem) {
+            document.querySelector("#goToCalendarPage").addEventListener("click", (event) => {
+                window.location.href = "/calendar.html";
+                console.log("Go to calendar");
+            });
+            
+        }
+		//updateList();
 	}
 	updateList() {
 		const newList = htmlToElement('<div id="calendarPage" class="container page-container"></div>');

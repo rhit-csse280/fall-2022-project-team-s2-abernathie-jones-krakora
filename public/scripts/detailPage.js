@@ -1,24 +1,24 @@
 /**
  * @fileoverview
- * Provides JavaScript interactions exclusive to the list page.
+ * Provides JavaScript interactions exclusive to the calendar page
  * 
  * @author 
  * Corwin Jones, Allison Abernathie, Larissa Krakora
  */
 
 
-/** List Page Controller */
+/** Detail Page Controller */
 
-class ListController {
-	constructor(auth, mAss) {
+
+/** Detail Page Controller */
+class DetailController {
+	constructor(auth, mAss, ass) {
 		const fbAuthManager = auth;
 		const fbMultiAssManager = mAss;
-		console.log("list mode");
-		document.querySelector("#fab").addEventListener("click", event => {
-			this.updateList();
-		});
+        const fbAssManager = ass;
+		console.log("detail mode");
 
-		const listItem = document.querySelector("#goToListPage");
+        const listItem = document.querySelector("#goToListPage");
         if(listItem) {
             document.querySelector("#goToListPage").addEventListener("click", (event) => {
                 window.location.href = "/list.html";
@@ -33,10 +33,10 @@ class ListController {
             });
             
         }
+		//updateList();
 	}
-
 	updateList() {
-		const newList = htmlToElement('<div id="calendarPage" class="container page-container"></div>');
+		const newList = htmlToElement('<div id="detailPage" class="container page-container"></div>');
 		for(let i = 0; i < rhit.fbMultiAssManager.length; i++) {
 			const ass = rhit.fbMultiAssManager.getAssAtIndex(i);
 			const newCard = this._createCard(ass);
@@ -45,19 +45,18 @@ class ListController {
 		const oldList = document.querySelector("#dayList");
 		oldList.parentElement.appendChild(newList);
 		oldList.remove();
-	};
-
-	_createElement(todoItem) {
+	}
+	_createCard(todoItem) {
 		return _htmlToElement(`<div class="card">
 		<div class="card-body">
-		  <div class="form-check">
-			<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-			<label class="form-check-label" for="defaultCheck1">
-			  ${todoItem}
-			</label>
-		  </div>
+			<div class="form-check">
+				<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+				<label class="form-check-label" for="defaultCheck1">
+					${todoItem}
+				</label>
+			</div>
 		</div>
-	  </div>`);
+	</div>`);
 	}
 	_htmlToElement(html) {
 		const template = document.createElement("template");
@@ -66,4 +65,4 @@ class ListController {
 	}
 }
 
-export { ListController };
+export { DetailController };

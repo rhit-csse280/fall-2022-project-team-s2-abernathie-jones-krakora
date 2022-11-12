@@ -272,7 +272,7 @@ rhit.init = async () => {
 				const list = new Module.ListController(rhit.fbAuthManager, rhit.fbMultiAssManager);
 			});
 		}
-		if (document.querySelector("#listPage")) {
+		if (document.querySelector("#detailPage")) {
 			import("./detailPage.js").then((Module)=> {
 				const detail = new Module.DetailController(rhit.fbAuthManager, rhit.fbMultiAssManager, rhit.fbAssManager);
 			})
