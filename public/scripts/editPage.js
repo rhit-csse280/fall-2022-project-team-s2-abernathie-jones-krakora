@@ -52,7 +52,3 @@ class EditController {
 		return template.content.firstChild;
 	}
 }
-/** Edit Page Main */
-export function editMain() {
-	const editController = new EditController();
-}
