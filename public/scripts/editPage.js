@@ -16,6 +16,21 @@ class EditController {
 		console.log("edit mode");
 		this._createCalendar(30, 1);
 
+		const listItem = document.querySelector("#goToListPage");
+        if(listItem) {
+            document.querySelector("#goToListPage").addEventListener("click", (event) => {
+                window.location.href = "/list.html";
+                console.log("Go to list");
+            });
+        }
+        const calendarItem = document.querySelector("#goToCalendarPage");
+        if(calendarItem) {
+            document.querySelector("#goToCalendarPage").addEventListener("click", (event) => {
+                window.location.href = "/calendar.html";
+                console.log("Go to calendar");
+            });
+            
+        }
 	}
 	_createCalendar = (numDays, offset)=> {
 		const oldCalendar = document.querySelector("#ed-calendar");
