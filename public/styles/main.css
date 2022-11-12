@@ -1,3 +1,4 @@
+/* Theme variables */
 :root {
     --background-color: #DDDDDD;
     --main-text-color: #000000;
@@ -6,90 +7,7 @@
     --toolbar-text-color: #ffffff;
 }
 
-body {
-    background: var(--background-color);
-    color: var(--main-text-color);
-}
-
-.navbar {
-    background-color: var(--toolbar-color);
-    color: tool;
-}
-
-.page-container {
-    margin-top: 75px;
-}
-
-.bmd-layout-content {
-    height: 100vh;
-}
-
-.material-icons {
-    margin: 0px;
-}
-.card {
-    background: var(--content-color);
-}
-.bottom-navbar {
-    background: var(--content-color);
-}
-#close {
-    width: 50px;
-    display: inline-block;
-    vertical-align: middle;
-}
-.navbar-brand {
-    display: inline-block;
-    width: 100px;
-    vertical-align: middle;
-    color: white;
-}
-.bmd-layout-drawer {
-    background: var(--background-color);
-}
-#menu {
-   display: block;
-}
-.material-icons{
-    color: var(--main-text-color);
-}
-#fab{
-    position: fixed;
-    right: 10px;
-    bottom: 70px;
-    background:  var(--toolbar-color);
-    color: white;
-    z-index: 999;
-}
-#ed-calendar-title{
-    font-size: 2em;
-    text-align: center;
-}
-#ed-calendar-header{
-    display: flex;
-    justify-content: flex-start;
-}
-.ed-calendar-header{
-    width: calc((100%/7) - 2px);
-    margin: 1px;
-    text-align: center;
-    background: var(--toolbar-color);
-}
-#ed-calendar{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-}
-#ed-calendar-spacer{
-    width: calc(2*((100%/7) - 2px));
-    height: 1px;
-    margin: 2px;
-}
-#ed-calendar .card{
-    width: calc((100%/7) - 2px);
-    margin: 1px;
-}
-@media(prefers-color-scheme: dark){
+@media(prefers-color-scheme: dark) {
     :root {
         --background-color: #555555;
         --main-text-color: #eeeeee;
@@ -97,6 +15,111 @@ body {
         --toolbar-text-color: #eeeeee;
         --content-color: #777777;
     }
+}
+
+/* Modal styles */
+.modal {
+    background-color: rgba(10, 10, 10, 0.45);
+}
+
+.modal-backdrop {
+    display: none;  /* hacky solution to backdrop appearing over content */
+}
+
+.modal-content {
+    background-color: var(--content-color)
+}
+
+/* Drawer styles */
+.bmd-layout-drawer {
+    background: var(--background-color);
+}
+
+#close {
+    width: 50px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#menu {
+    display: block;
+}
+
+/* Global styles */
+.bmd-layout-content {
+    height: 100vh;
+}
+
+body {
+    background: var(--background-color);
+    color: var(--main-text-color);
+}
+
+.bottom-navbar {
+    background: var(--content-color);
+}
+
+.card {
+    background: var(--content-color);
+}
+
+.material-icons {
+    color: var(--main-text-color);
+    margin: 0px;
+}
+
+.navbar {
+    background-color: var(--toolbar-color);
+    color: tool;    /* What????? */
+}
+
+.navbar-brand {
+    display: inline-block;
+    width: 100px;
+    vertical-align: middle;
+    color: white;
+}
+
+.page-container {
+    margin-top: 75px;
+}
+
+#fab {
+    position: fixed;
+    right: 10px;
+    bottom: 70px;
+    background: var(--toolbar-color);
+    color: white;
+    z-index: 999;
+}
+
+/* Edit page styles */
+#ed-calendar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.ed-calendar-header {
+    width: calc((100%/7) - 2px);
+    margin: 1px;
+    text-align: center;
+    background: var(--toolbar-color);
+}
+
+#ed-calendar-title {
+    font-size: 2em;
+    text-align: center;
+}
+
+/* Login page styles */
+#loginPage {
+    text-align: center;
+}
+
+#logo {
+    width: 128px;
+    height: 128px;
 }
 
 #rosefireButton {
@@ -109,30 +132,6 @@ body {
     border-radius: 5px;
 }
 
-#loginPage {
-    text-align: center;
-}
-
-#logo {
-    width: 128px;
-    height: 128px;
-}
-
 #signinText {
     margin: 0;
-}
-.modal-backdrop {
-    display:none;
-}
-.modal{
-    background-color: rgba(10,10,10,0.45);
-}
-
-.modal-content {
-    background-color: var(--content-color)
-}
-
-
-.modal-content {
-    background-color: var(--content-color)
 }

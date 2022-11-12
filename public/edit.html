@@ -23,7 +23,8 @@
                 <a class="navbar-brand">Greg~O</a>
             </nav>
         </header>
-        <!-- Drawer -->
+
+        <!-- Drawer content -->
         <div id="dw-s2" class="bmd-layout-drawer bg-faded">
             <header id="menu">
                 <a class="navbar-brand">Menu</a>
@@ -49,43 +50,47 @@
                 <h1 id="ed-calendar-title">January 2021</h1>
                 <div id="ed-calendar"></div>
 
-                <button type="button" id="fab" class="btn bmd-btn-fab" data-toggle="modal" data-target="#addAssignmentDialog">
+                <!-- Add fab -->
+                <button type="button" id="fab" class="btn bmd-btn-fab" data-toggle="modal"
+                    data-target="#addAssignmentDialog">
                     <i class="material-icons">add</i>
-                  </button>
-          
-                  <!-- Modal -->
-        <div class="modal fade" id="addAssignmentDialog" tabindex="-1" role="dialog" aria-labelledby="Add assignment dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Add Assignment</h5>
-                </div>
-                <div class="modal-body">
-        
-                  
-                    <div class="form-group bmd-form-group">
-                      <label for="inputName" class="bmd-label-floating" style = "color: var(--main-text-color)">Assignment</label>
-                      <input type="text" class="form-control" id="inputName">
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="addAssignmentDialog" tabindex="-1" role="dialog"
+                    aria-labelledby="Add assignment dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Add Assignment</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group bmd-form-group">
+                                    <label for="inputName" class="bmd-label-floating"
+                                        style="color: var(--main-text-color)">Assignment</label>
+                                    <input type="text" class="form-control" id="inputName">
+                                </div>
+                                <div class="form-group bmd-form-group">
+                                    <label for="inputClass" class="bmd-label-floating"
+                                        style="color: var(--main-text-color)">Class</label>
+                                    <input type="text" class="form-control" id="inputClass">
+                                </div>
+                                <div class="form-group bmd-form-group">
+                                    <label for="inputDate" class="bmd-label-floating"
+                                        style="color: var(--main-text-color)">Due date</label>
+                                    <input type="text" class="form-control" id="inputDate">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                <button id="submitAddQuote" type="button" class="btn btn-primary"
+                                    data-dismiss="modal">CREATE</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group bmd-form-group">
-                      <label for="inputClass" class="bmd-label-floating" style = "color: var(--main-text-color)">Class</label>
-                      <input type="text" class="form-control" id="inputClass">
-                    </div>
-                    <div class="form-group bmd-form-group">
-                        <label for="inputDate" class="bmd-label-floating" style = "color: var(--main-text-color)">Due date</label>
-                        <input type="text" class="form-control" id="inputDate">
-                    </div>
-                  
-        
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                  <button id="submitAddQuote" type="button" class="btn btn-primary" data-dismiss="modal">CREATE</button>
-                </div>
-              </div>
             </div>
-          </div>
-            </div>
+
             <!-- Bottom navbar -->
             <nav class="navbar bottom-navbar fixed-bottom">
                 <button type="button" class="btn btn-secondary"><i class="material-icons">list</i></button>
@@ -95,6 +100,7 @@
         </main>
     </div>
 
+    <!-- Script imports -->
     <script src="scripts/jquery.min.js"></script>
     <script src="scripts/popper.js"></script>
     <script src="scripts/bootstrap-material-design.js"></script>
@@ -105,7 +111,6 @@
     <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
     <script src="/__/firebase/init.js"></script>
     <script src="scripts/main.js"></script>
-
 
 </body>
 
