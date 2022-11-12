@@ -70,7 +70,7 @@ body {
 
 .navbar {
     background-color: var(--toolbar-color);
-    color: tool;    /* What????? */
+    /* color: tool;    What????? */
 }
 
 .navbar-brand {
