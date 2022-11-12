@@ -33,7 +33,7 @@ class EditController {
 			</div>`);
 		for(let i=1; i<=numDays; i++) {
 			const card = this._htmlToElement(`
-			<div class="card">
+			<div data-date="${i}" class="card">
 				<div class="card-body">
 					${i}
 				</div>

@@ -20,6 +20,8 @@ class CalendarController {
 			const name = document.querySelector("#inputName").value;
 			const subject = document.querySelector("#inputClass").value;
 			const date = document.querySelector("#inputDate").value;
+
+			rhit.fbMultiAssManager.add(name, subject, date);
 			
 		});
 		$("#addAssignmentDialog").on("show.bs.modal", (event) =>{
