@@ -20,10 +20,20 @@ class ListController {
 	}
 
 	updateList() {
-		const newCheck = this._createElement("place holder");
+		const newList = htmlToElement('<div id="calendarPage" class="container page-container"></div>');
 
-		const checklist = document.querySelector("#checklist");
-		checklist.appendChild(newCheck);
+		for(let i = 0; i < rhit.fbMultiAssManager.length; i++) {
+			const ass = rhit.fbMultiAssManager.getAssAtIndex(i);
+			const newCard = this._createCard(ass);
+
+			newList.appendChild(newCard);
+		}
+
+		const oldList = document.querySelector("#dayList");
+		oldList.removeAttribute("id");
+		oldList.hidden = true;
+
+		oldList.parentElement.appendChild(newList);
 	};
 
 	_createElement(todoItem) {
