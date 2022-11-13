@@ -66,29 +66,30 @@ class DetailController {
 		});
 
 
-		//updateList();
+		this.updateList();
 	}
 	updateList() {
-		const newList = htmlToElement('<div id="detailPage" class="container page-container"></div>');
+		const newList = this._htmlToElement('<div id="day-list"></div>');
 		for(let i = 0; i < rhit.fbMultiAssManager.length; i++) {
 			const ass = rhit.fbMultiAssManager.getAssAtIndex(i);
 			const newCard = this._createCard(ass);
 
-            newCard.onclick = (event) => {
-                ass.id
-            }
+            // newCard.onclick = (event) => {
+            //     const assMan = rhit.FbSingleAssManager(ass.id);
+            // }
 
 			newList.appendChild(newCard);
 		}
-		const oldList = document.querySelector("#dayList");
+		const oldList = document.querySelector("#day-list");
 		oldList.parentElement.appendChild(newList);
 		oldList.remove();
 	}
 	_createCard(todoItem) {
-		return _htmlToElement(`<div class="card" name=${todoItem.id} data-toggle="modal" data-target="#editAssDialog">
+		return this._htmlToElement(`
+        <div class="card" data-toggle="modal" data-target="#editAss${todoItem.id}Dialog">
 		<div class="card-body">
 			<div class="form-check">
-				<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+				<input class="form-check-input" type="checkbox" value="false" id="defaultCheck1">
 				<label class="form-check-label" for="defaultCheck1">
 					${todoItem}
 				</label>

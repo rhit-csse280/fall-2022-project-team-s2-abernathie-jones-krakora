@@ -47,10 +47,9 @@
         <main class="bmd-layout-content">
             <!-- Page content -->
             <div id="detailPage" class="container page-container">
+                <h4 id="">Friday April 14</h4>
                 <div id="day-list">
-                    <div class="calendar-day">
-                        <h4 in="#tomorrowLabel">Friday April 14</h4>
-                        <div id="#tomorrowCard" class="card">
+                        <div class="card">
                             <div class="card-body">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
@@ -69,7 +68,8 @@
                                     </label>
                                 </div>
                             </div>
-                        </div>
+                        </div>  
+                </div>
                         <br>
                         <br>
                         <div class="card">
@@ -78,15 +78,9 @@
                                 <h6 id="notes" class="card-subtitle mb-2 text-muted">Loading..</h6>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-
-                <button type="button" id="fab" class="btn bmd-btn-fab" data-toggle="modal" data-target="#editAssDialog">
-                    <i class="material-icons">add</i>
-                  </button>
                 <!-- Modal -->
-                <div class="modal fade" id="editAssDialog" tabindex="-1" role="dialog" aria-labelledby="Add assignment dialog" aria-hidden="true">
+                <div class="modal fade" id="editAss${ass.id}Dialog" tabindex="-1" role="dialog" aria-labelledby="Add assignment dialog" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
