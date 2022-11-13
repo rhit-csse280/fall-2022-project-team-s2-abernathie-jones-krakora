@@ -2,6 +2,7 @@
 class SettingsController {
     constructor(){
         this.color = null;
+        this.root = document.querySelector(':root');
 		//Sidebar navigation
         document.querySelector("#menuSignOut").addEventListener("click", (event) => {
 			rhit.fbAuthManager.signOut();
@@ -34,7 +35,6 @@ class SettingsController {
 
         //Change settings
         document.querySelector("#submitSettings").addEventListener("click", (event) => {
-            this.update();
             if(document.querySelector("#redgreen").checked == true){
                 console.log("passing redgreen");
                 this.color = "redgreen";
@@ -45,7 +45,7 @@ class SettingsController {
                 console.log("Passing blueyellow");
 
                 rhit.fbUserManager.updateColorSetting("blueyellow")}
-            
+            this.update();
         });
         document.querySelector("#clearSettings").addEventListener("click", (event) => {
             console.log("passing none");
@@ -58,8 +58,16 @@ class SettingsController {
         this.update();
     }
     update(){
+        
        if(rhit.fbUserManager.color != "none"){
         document.querySelector(`#${rhit.fbUserManager.color}`).checked = true;
+            if(rhit.fbUserManager.color == "redgreen"){
+                root.style.setProperty("--toolbar-color", "#FFFFFF");
+                root.style.setProperty("--toggle-color", "#441052");
+            }else if(rhit.fbUserManager.color == "blueyellow"){
+                root.style.setProperty("--toolbar-color", "#DDDDDD");
+                root.style.setProperty("--toggle-color", "#441052");
+            }
        }else{
         document.querySelector("#redgreen").checked = false;
         document.querySelector("#blueyellow").checked = false;

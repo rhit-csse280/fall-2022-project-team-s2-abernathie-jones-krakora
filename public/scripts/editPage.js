@@ -12,7 +12,7 @@ class EditController {
 		const listItem = document.querySelector("#goToListPage");
         if(listItem) {
             document.querySelector("#goToListPage").addEventListener("click", (event) => {
-                window.location.href = "/list.html";
+                window.location.href = `/list.html?uid=${rhit.fbAuthManager.uid}`;
                 console.log("Go to list");
             });
         }
@@ -42,7 +42,7 @@ class EditController {
             const priority = document.querySelector("#inputPriority").checked;
             
             rhit.fbAssManager.update(name, subject, date, priority);
-            window.location.href = `/detail.html?date=${date}&weekday=${weekday}`;
+            window.location.href = `/detail.html?uid=${rhit.fbAuthManager.uid}date=${date}&weekday=${weekday}`;
         });
         $("#editAssDialog").on("show.bs.modal", (event) => {
             console.log("dialog about to show up");
@@ -64,7 +64,7 @@ class EditController {
             });
         });
         document.querySelector("#cancelEditAss").addEventListener("click", (event) => {
-            window.location.href = `/detail.html?date=${date}&weekday=${weekday}`;
+            window.location.href = `/detail.html?uid=${rhit.fbAuthManager.uid}date=${date}&weekday=${weekday}`;
 
         });
 
