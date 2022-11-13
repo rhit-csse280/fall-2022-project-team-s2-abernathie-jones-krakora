@@ -33,6 +33,14 @@ class EditController {
             });
             
         }
+		const settingsItem = document.querySelector("#goToSettings");
+        if(calendarItem) {
+            document.querySelector("#goToSettings").addEventListener("click", (event) => {
+                window.location.href = "/settings.html";
+                console.log("Go to settings");
+            });
+            
+		}
 	}
 	_createCalendar = (numDays, offset)=> {
 		const oldCalendar = document.querySelector("#ed-calendar");

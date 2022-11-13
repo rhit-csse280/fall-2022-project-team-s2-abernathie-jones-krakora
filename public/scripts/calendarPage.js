@@ -15,10 +15,6 @@ class CalendarController {
 	constructor() {
 		console.log("calendar mode");
 
-		// Sidebar Navigation
-        document.querySelector("#menuSignOut").addEventListener("click", (event) => {
-			rhit.fbAuthManager.signOut();
-		});
 		document.querySelector("#submitAssignment").addEventListener("click", event => {
 			const name = document.querySelector("#inputName").value;
 			const subject = document.querySelector("#inputClass").value;
@@ -32,6 +28,11 @@ class CalendarController {
 		});
 		$("#addAssignmentDialog").on("shown.bs.modal", event => {
 			document.querySelector("#inputName").focus();
+		});
+
+		// Sidebar Navigation
+        document.querySelector("#menuSignOut").addEventListener("click", (event) => {
+			rhit.fbAuthManager.signOut();
 		});
 		const listItem = document.querySelector("#goToListPage");
         if(listItem) {
@@ -48,6 +49,14 @@ class CalendarController {
             });
             
         }
+		const settingsItem = document.querySelector("#goToSettings");
+        if(calendarItem) {
+            document.querySelector("#goToSettings").addEventListener("click", (event) => {
+                window.location.href = "/settings.html";
+                console.log("Go to settings");
+            });
+            
+		}
 		//updateList();
 	}
 	updateList() {

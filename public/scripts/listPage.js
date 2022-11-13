@@ -13,10 +13,6 @@ class ListController {
 	constructor(auth, mAss) {
 		console.log("list mode");
 
-		// Sidebar Navigation
-        document.querySelector("#menuSignOut").addEventListener("click", (event) => {
-			rhit.fbAuthManager.signOut();
-		});
 		document.querySelector("#submitAssignment").addEventListener("click", event => {
 			const name = document.querySelector("#inputName").value;
 			const subject = document.querySelector("#inputClass").value;
@@ -36,6 +32,10 @@ class ListController {
 
 		rhit.fbMultiAssManager.beginListening(this.updateList.bind(this));
 
+		// Sidebar Navigation
+        document.querySelector("#menuSignOut").addEventListener("click", (event) => {
+			rhit.fbAuthManager.signOut();
+		});
 		const listItem = document.querySelector("#goToListPage");
         if(listItem) {
             document.querySelector("#goToListPage").addEventListener("click", (event) => {
@@ -48,6 +48,14 @@ class ListController {
             document.querySelector("#goToCalendarPage").addEventListener("click", (event) => {
                 window.location.href = "/calendar.html";
                 console.log("Go to calendar");
+            });
+            
+		}
+		const settingsItem = document.querySelector("#goToSettings");
+        if(calendarItem) {
+            document.querySelector("#goToSettings").addEventListener("click", (event) => {
+                window.location.href = "/settings.html";
+                console.log("Go to settings");
             });
             
 		}
