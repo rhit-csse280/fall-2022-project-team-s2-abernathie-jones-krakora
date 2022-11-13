@@ -35,7 +35,7 @@ class DetailController {
                 window.location.href = "/calendar.html";
                 console.log("Go to calendar");
             });  
-        }
+        }rhit.fbMultiAssManager.beginListening(this.updateList.bind(this));
 
         //Edit an Assignment
         document.querySelector("#submitEditAss").addEventListener("click", (event) => {
@@ -91,7 +91,7 @@ class DetailController {
 			<div class="form-check">
 				<input class="form-check-input" type="checkbox" value="false" id="defaultCheck1">
 				<label class="form-check-label" for="defaultCheck1">
-					${todoItem}
+					${todoItem.name}
 				</label>
 			</div>
 		</div>

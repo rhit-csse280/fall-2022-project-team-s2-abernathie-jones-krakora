@@ -228,6 +228,11 @@ rhit.FbMultiAssManager = class {
 		if (document.querySelector("#listPage")){
 			query = query.where(rhit.FB_KEY_PRIORITY, "==", true)
 		}
+		if (document.querySelector("#detailPage")){
+			const urlParams = new URLSearchParams(window.location.search);
+			const date = urlParams.get("date");
+			query = query.where(rhit.FB_KEY_ASSDATE, "==", date)
+		}
 		this._unsubscribe = query
 			.onSnapshot(querySnapshot => {
 				this._documentSnapshots = querySnapshot.docs;
@@ -263,9 +268,10 @@ rhit.checkForRedirects = () => {
 
 /** Initialize the code for whichever page the user is on */
 rhit.init = async () => {
-	const urlParams = new URLSearchParams(window.location.search);
+	
 	if (document.querySelector("#loginPage")) new rhit.LoginPageController();
 	else {
+		const urlParams = new URLSearchParams(window.location.search);
 		const uid = urlParams.get("uid");
 		rhit.fbMultiAssManager = new rhit.FbMultiAssManager(uid);
 		if (document.querySelector("#editPage")) {
