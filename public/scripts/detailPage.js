@@ -13,8 +13,11 @@
 /** Detail Page Controller */
 class DetailController {
 	constructor() {
+		const urlParams = new URLSearchParams(window.location.search);
+		const date = urlParams.get("date");
+		const weekday = urlParams.get("weekday");
 		const fbAssManager = null;
-
+		const day = URLSearchParams.get
 		console.log("detail mode");
 
         // Sidebar Navigation
@@ -52,7 +55,7 @@ class DetailController {
 				//console.log(`You clicked on ${mq.id}`);
 				//rhit.storage.setMovieQuoteID(mq.id);
 
-				window.location.href = `/edit.html?id=${ass.id}`;
+				window.location.href = `/edit.html?id=${ass.id}&date=${date}&weekday=${(weekday)}`;
 
 			}
 			newList.appendChild(newCard);

@@ -46,54 +46,53 @@
 
         <main class="bmd-layout-content">
             <!-- Page content -->
-            <div id="detailPage" class="container page-container">
-                <h4 id="">Friday April 14</h4>
-                <div id="day-list">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                    <label class="form-check-label" for="defaultCheck1">
-                                        Lab report
-                                    </label>
-                                </div>
+            <div id="editPage" class="container page-container">
+                <!-- Modal -->
+                <div class="modal fade" id="editAssDialog" tabindex="-1" role="dialog" aria-labelledby="Add assignment dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title">Edit Assignment</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group bmd-form-group">
+                            <label for="inputName" class="bmd-label-floating" style = "color: var(--main-text-color)">Assignment</label>
+                            <input type="text" class="form-control" id="inputName">
+                            </div>
+                            <div class="form-group bmd-form-group">
+                            <label for="inputClass" class="bmd-label-floating" style = "color: var(--main-text-color)">Class</label>
+                            <input type="text" class="form-control" id="inputClass">
+                            </div>
+                            <div class="form-group bmd-form-group">
+                                <label for="inputDate" class="bmd-label-floating" style = "color: var(--main-text-color)">Due date</label>
+                                <input type="text" class="form-control" id="inputDate">
+                                <span class = "bmd-help">Format as yyyymmdd</span>
                             </div>
                         </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                    <label class="form-check-label" for="defaultCheck1">
-                                        CS HW
-                                    </label>
-                                </div>
-                            </div>
-                        </div>  
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                            <button id="submitEditAss" type="button" class="btn btn-primary" data-dismiss="modal">SAVE</button>
+                        </div>
+                        <button id="submitDeleteAss" type="button" class="btn btn-primary" data-dismiss="modal">DELETE</button>
+                    </div>
+                    </div>
                 </div>
-                        <br>
-                        <br>
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Notes</h5>
-                                <h6 id="notes" class="card-subtitle mb-2 text-muted">Loading..</h6>
-                            </div>
-                        </div>
-
+                
             </div>
         </main>
-    </div>
+        </div>
 
-    <!-- Script imports -->
-    <script src="scripts/jquery.min.js"></script>
-    <script src="scripts/popper.js"></script>
-    <script src="scripts/bootstrap-material-design.js"></script>
-    <script>$("body").bootstrapMaterialDesign();</script>
-    <script src="/__/firebase/7.18.0/firebase-app.js"></script>
-    <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
-    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
-    <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
-    <script src="/__/firebase/init.js"></script>
-    <script src="scripts/main.js"></script>
+<!-- Script imports -->
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/popper.js"></script>
+<script src="scripts/bootstrap-material-design.js"></script>
+<script>$("body").bootstrapMaterialDesign();</script>
+<script src="/__/firebase/7.18.0/firebase-app.js"></script>
+<script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
+<script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+<script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
+<script src="/__/firebase/init.js"></script>
+<script src="scripts/main.js"></script>
 
 </body>
 
