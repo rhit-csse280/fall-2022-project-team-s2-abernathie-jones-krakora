@@ -51,7 +51,7 @@ rhit.FbUserManager = class {
 		this._unsubscribe = null;
 		console.log("created user manager");
 	}
-	addNewUserMaybe(uid, name, photoUrl) {	// Add new user, if one doesn't already exist
+	addNewUserMaybe(uid, name) {	// Add new user, if one doesn't already exist
 		const userRef = this._collectionRef.doc(uid);
 		return userRef.get().then(doc => {
 			if (doc.exists) {
@@ -61,7 +61,7 @@ rhit.FbUserManager = class {
 				console.log("no such doc");
 				return userRef.set({
 					[rhit.FB_KEY_NAME]: name,
-					[rhit.FB_KEY_PHOTO_URL]: photoUrl
+					[rhit.FB_KEY_COLOR]: color
 				}).then(() => {
 					console.log("success");
 					return true;
@@ -79,17 +79,11 @@ rhit.FbUserManager = class {
 		});
 	}
 	stopListening() { this._unsubscribe(); }
-	updatePhotoUrl(photoUrl) {
+	updateColorSetting(color) {
 		const userRef = this._collectionRef.doc(rhit.fbAuthManager.uid);
-		userRef.update({ [rhit.FB_KEY_PHOTO_URL]: photoUrl, })
+		userRef.update({ [rhit.FB_KEY_COLOR]: color, })
 			.then(() => { console.log("update success");})
 			.catch(error => { console.error("update error: ", error); });
-	}
-	updateName(name) {
-		const userRef = this._collectionRef.doc(rhit.fbAuthManager.uid);
-		return userRef.update({ [rhit.FB_KEY_NAME]: name, })
-			.then(() => { console.log("success"); })
-			.catch(error => { console.error("error ", error); });
 	}
 	get name() { return this._document.get(rhit.FB_KEY_NAME); }
 	get photoUrl() { return this._document.get(rhit.FB_KEY_PHOTO_URL); }
@@ -237,7 +231,9 @@ rhit.FbMultiAssManager = class {
 			query = query.where(rhit.FB_KEY_AUTHOR, "==", this._uid);
 		}
 		if (document.querySelector("#listPage")){
-			query = query.where(rhit.FB_KEY_PRIORITY, "==", true)
+			if(document.querySelector("#priorityCheck").checked == true){
+				query = query.where(rhit.FB_KEY_PRIORITY, "==", true)
+			}
 		}
 		if (document.querySelector("#detailPage")){
 			const urlParams = new URLSearchParams(window.location.search);
