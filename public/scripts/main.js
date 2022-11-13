@@ -16,6 +16,8 @@ rhit.FB_KEY_PHOTO_URL = "photoUrl";
 rhit.FB_KEY_ASSNAME = "assName";
 rhit.FB_KEY_ASSSUB = "assSub";
 rhit.FB_KEY_ASSDATE = "assDate";
+rhit.FB_KEY_PRIORITY = "assPri";
+rhit.FB_KEY_AUTHOR = "author";
 
 /** Singleton objects */
 rhit.fbAuthManager = null;
@@ -32,11 +34,12 @@ rhit.fbMultiAssManager = null;
 
 /** Assignment object */
 rhit.Ass = class {
-	constructor(id, name, subject, date) {
+	constructor(id, name, subject, date, priority) {
 		this.id = id;
 		this.name = name;
 		this.subject = subject;
 		this.date = date;
+		this.priority = priority;
 	}
 }
 
@@ -168,6 +171,7 @@ rhit.FbAssManager = class {
 		console.log(`Listening to ${this._ref.path}`)
 	}
 	beginListening(changeListener) {
+		if (this._uid) query = query.where(rhit.FB_KEY_AUTHOR, "==", this._uid);
 		this._unsubscribe = this._ref.onSnapshot(doc => {
 			if (doc.exists) {
 				console.log("Document data:", doc.data());
@@ -177,11 +181,12 @@ rhit.FbAssManager = class {
 		});
 	}
 	stopListening() { this._unsubscribe(); }
-	update(name, subject) {
+	update(name, subject, date, priority) {
 		this._ref.update({
 			[rhit.FB_KEY_ASSNAME]: name,
 			[rhit.FB_KEY_ASSSUB]: subject,
-			[rhit.FB_KEY_ASSDATE]: firebase.firestore.Timestamp.toDate(),
+			[rhit.FB_KEY_ASSDATE]: date,
+			[rhit.FB_KEY_PRIORITY]: priority,
 		})
 			.then(() => { console.log("Document updated!"); })
 			.catch(error => { console.error("Error adding document: ", error); });
@@ -191,6 +196,7 @@ rhit.FbAssManager = class {
 	get sub() { return this._documentSnapshot.get(rhit.FB_KEY_ASSSUB); }
 	get date() { return this._documentSnapshot.get(rhit.FB_KEY_ASSDATE); }
 	get author() { return this._documentSnapshot.get(rhit.FB_KEY_AUTHOR); }
+	get priority() { return this._documentSnapshot.get(rhit.FB_KEY_PRIORITY); }
 }
 
 /** Assignment manager for lists of assignments */
@@ -202,20 +208,26 @@ rhit.FbMultiAssManager = class {
 		this._ref = firebase.firestore().collection(rhit.FB_COLLECTION_USERS);
 		this._unsubscribe = null;
 	}
-	add(name, subject) {
+	add(name, subject, date, priority) {
 		this._ref.add({
 			[rhit.FB_KEY_ASSNAME]: name,
 			[rhit.FB_KEY_ASSSUB]: subject,
-			[rhit.FB_KEY_ASSDATE]: firebase.firestore.Timestamp.toDate(),
+			[rhit.FB_KEY_ASSDATE]: date,
 			[rhit.FB_KEY_AUTHOR]: rhit.fbAuthManager.uid,
+			[rhit.FB_KEY_PRIORITY]: priority,
 		})
 			.then(docRef => { console.log("Document written with ID: ", docRef.id); })
 			.catch(error => { console.error("Error adding document: ", error); });
 		console.log(` Dodad added as: ${name} ${subject}`);
 	}
 	beginListening(changeListener) {
-		let query = this._ref.orderBy(rhit.FB_KEY_ASSDATE, "desc").limit(24);
-		if (this._uid) query = query.where(rhit.FB_KEY_AUTHOR, "==", this._uid);
+		let query = this._ref;
+		if (this._uid) {
+			query = query.where(rhit.FB_KEY_AUTHOR, "==", this._uid);
+		}
+		if (document.querySelector("#listPage")){
+			query = query.where(rhit.FB_KEY_PRIORITY, "==", true)
+		}
 		this._unsubscribe = query
 			.onSnapshot(querySnapshot => {
 				this._documentSnapshots = querySnapshot.docs;
@@ -235,6 +247,7 @@ rhit.FbMultiAssManager = class {
 			documentSnapshot.get(rhit.FB_KEY_ASSNAME),
 			documentSnapshot.get(rhit.FB_KEY_ASSSUB),
 			documentSnapshot.get(rhit.FB_KEY_ASSDATE),
+			documentSnapshot.get(rhit.FB_KEY_PRIORITY),
 		);
 		return ass;
 	}

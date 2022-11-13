@@ -10,9 +10,7 @@
 /** Edit Page Controller */
 
 class EditController {
-	constructor(auth, mAss) {
-		const fbAuthManager = auth;
-		const fbMultiAssManager = mAss;
+	constructor() {
 		console.log("edit mode");
 		this._createCalendar(30, 1);
 
