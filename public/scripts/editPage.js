@@ -24,14 +24,6 @@ class EditController {
             });
             
         }
-		const settingsItem = document.querySelector("#goToSettings");
-        if(settingsItem) {
-            document.querySelector("#goToSettings").addEventListener("click", (event) => {
-                window.location.href = "/settings.html";
-                console.log("Go to settings");
-            });
-            
-		}
         rhit.fbAssManager.beginListening(this.updateList.bind(this));
 
         //Edit an Assignment
