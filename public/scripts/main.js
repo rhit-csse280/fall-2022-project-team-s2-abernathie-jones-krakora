@@ -274,26 +274,25 @@ rhit.init = async () => {
 		const urlParams = new URLSearchParams(window.location.search);
 		const uid = urlParams.get("uid");
 		rhit.fbMultiAssManager = new rhit.FbMultiAssManager(uid);
-		if (document.querySelector("#editPage")) {
-			import("./editPage.js").then((Module)=> {
-				const editor =  new Module.EditController(rhit.fbAuthManager, rhit.fbMultiAssManager);
-			});
-		}
+		//TODO: Implement
+		//if (document.querySelector("#editPage")) {
+		// 	import("./Page.js").then((Module)=> {
+		// 		const editor =  new Module.EditController();
+		// 	});
+		// }
 		if (document.querySelector("#calendarPage")) {
-			import("./calendarPage.js").then((Module)=> {
-				const calendar =  new Module.CalendarController(rhit.fbAuthManager, rhit.fbMultiAssManager);
+			import("./garbo.js/index.js").then((Module)=> {
+				const calendar =  new Module.CalendarController();
 			});
-			const { calendarMain } = await import("/public/scripts/calendarPage.js");
-			calendarMain(rhit.fbAuthManager, rhit.fbMultiAssManager);
 		}
 		if (document.querySelector("#listPage")) {
 			import("./listPage.js").then((Module)=> {
-				const list = new Module.ListController(rhit.fbAuthManager, rhit.fbMultiAssManager);
+				const list = new Module.ListController();
 			});
 		}
 		if (document.querySelector("#detailPage")) {
 			import("./detailPage.js").then((Module)=> {
-				const detail = new Module.DetailController(rhit.fbAuthManager, rhit.fbMultiAssManager, rhit.fbAssManager);
+				const detail = new Module.DetailController();
 			})
 		}
 	}

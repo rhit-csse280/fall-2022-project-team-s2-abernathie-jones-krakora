@@ -12,10 +12,9 @@
 
 /** Detail Page Controller */
 class DetailController {
-	constructor(auth, mAss, ass) {
-		const fbAuthManager = auth;
-		const fbMultiAssManager = mAss;
-        const fbAssManager = ass;
+	constructor() {
+		const fbAssManager = null;
+
 		console.log("detail mode");
 
         // Sidebar Navigation
@@ -43,22 +42,22 @@ class DetailController {
 			const subject = document.querySelector("#inputClass").value;
             const date = document.querySelector("#inputDate").value;
             const priority = document.querySelector("#inputPriority").checked;
-
-			rhit.fbSingleAssManager.update(name, subject, date, priority);
+			
+			fbAssManager.update(name, subject, date, priority);
 		});
         $("#editAssDialog").on("show.bs.modal", (event) => {
 			console.log("dialog about to show up");
-			document.querySelector("#inputName").value = rhit.fbSingleAssManager.name;
-			document.querySelector("#inputClass").value = rhit.fbSingleAssManager.class;
-            document.querySelector("#inputDate").value = rhit.fbSingleAssManager.date;
-            document.querySelector("#inputPriority").checked = rhit.fbSingleAssManager.priority;
+			document.querySelector("#inputName").value = fbAssManager.name;
+			document.querySelector("#inputClass").value = fbAssManager.class;
+            document.querySelector("#inputDate").value = fbAssManager.date;
+            document.querySelector("#inputPriority").checked = fbAssManager.priority;
 		});
 		$("#editAssDialog").on("shown.bs.modal", (event) => {
 			console.log("dialog is now visible");
 			document.querySelector("#inputName").focus();
 		});
         document.querySelector("#submitDeleteAss").addEventListener("click", (event) => {
-			rhit.fbSingleAssManager.delete().then(function() {
+			fbAssManager.delete().then(function() {
 				console.log("Document successfully deleted!");
 			}).catch(function (error) {
 				console.error("Error removing document: ", error);
@@ -72,12 +71,18 @@ class DetailController {
 		const newList = this._htmlToElement('<div id="day-list"></div>');
 		for(let i = 0; i < rhit.fbMultiAssManager.length; i++) {
 			const ass = rhit.fbMultiAssManager.getAssAtIndex(i);
-			const newCard = this._createCard(ass);
+			const newCard = this._createCard(ass.name);
 
             // newCard.onclick = (event) => {
-            //     const assMan = rhit.FbSingleAssManager(ass.id);
+            //     const assMan = rhit.fbAssManager(ass.id);
             // }
+			newCard.onclick = (event)=>{
+				//console.log(`You clicked on ${mq.id}`);
+				//rhit.storage.setMovieQuoteID(mq.id);
 
+				window.location.href = `/edit.html?id=${ass.id}`;
+
+			}
 			newList.appendChild(newCard);
 		}
 		const oldList = document.querySelector("#day-list");
@@ -86,12 +91,12 @@ class DetailController {
 	}
 	_createCard(todoItem) {
 		return this._htmlToElement(`
-        <div class="card" data-toggle="modal" data-target="#editAss${todoItem.id}Dialog">
+        <div "class="card" data-toggle="modal" data-target="#editAssDialog">
 		<div class="card-body">
 			<div class="form-check">
 				<input class="form-check-input" type="checkbox" value="false" id="defaultCheck1">
 				<label class="form-check-label" for="defaultCheck1">
-					${todoItem.name}
+					${todoItem}
 				</label>
 			</div>
 		</div>
