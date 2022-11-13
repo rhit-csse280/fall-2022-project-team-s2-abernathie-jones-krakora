@@ -181,6 +181,7 @@ rhit.FbAssManager = class {
 		});
 	}
 	stopListening() { this._unsubscribe(); }
+	
 	update(name, subject, date, priority) {
 		this._ref.update({
 			[rhit.FB_KEY_ASSNAME]: name,
@@ -197,6 +198,16 @@ rhit.FbAssManager = class {
 	get date() { return this._documentSnapshot.get(rhit.FB_KEY_ASSDATE); }
 	get author() { return this._documentSnapshot.get(rhit.FB_KEY_AUTHOR); }
 	get priority() { return this._documentSnapshot.get(rhit.FB_KEY_PRIORITY); }
+	get ass() {
+		const ass = new rhit.Ass(
+			this._documentSnapshot.id,
+			this._documentSnapshot.get(rhit.FB_KEY_ASSNAME),
+			this._documentSnapshot.get(rhit.FB_KEY_ASSSUB),
+			this._documentSnapshot.get(rhit.FB_KEY_ASSDATE),
+			this._documentSnapshot.get(rhit.FB_KEY_PRIORITY),
+		);
+		return ass;
+	}
 }
 
 /** Assignment manager for lists of assignments */
@@ -274,12 +285,14 @@ rhit.init = async () => {
 		const urlParams = new URLSearchParams(window.location.search);
 		const uid = urlParams.get("uid");
 		rhit.fbMultiAssManager = new rhit.FbMultiAssManager(uid);
-		//TODO: Implement
-		//if (document.querySelector("#editPage")) {
-		// 	import("./Page.js").then((Module)=> {
-		// 		const editor =  new Module.EditController();
-		// 	});
-		// }
+		if (document.querySelector("#editPage")) {
+			const assID = urlParams.get("id");
+			rhit.fbAssManager = new rhit.FbAssManager(assID);
+			console.log("Ass Manager is here")
+			import("./editPage.js").then((Module)=> {
+				new Module.EditController();
+			});
+		}
 		if (document.querySelector("#calendarPage")) {
 			import("./calendarPage.js").then((Module)=> {
 				new Module.CalendarController();
@@ -294,8 +307,7 @@ rhit.init = async () => {
 			import("./detailPage.js").then((Module)=> {
 				new Module.DetailController();
 			})
-			const assID = urlParams.get("id");
-			rhit.fbAssManager = new rhit.FbAssManager(assID);
+			
 		}
 	}
 }

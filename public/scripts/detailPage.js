@@ -13,18 +13,16 @@
 /** Detail Page Controller */
 class DetailController {
 	constructor() {
-		const urlParams = new URLSearchParams(window.location.search);
-		const date = urlParams.get("date");
-		const weekday = urlParams.get("weekday");
-		const day = date.slice(6);
+		this.urlParams = new URLSearchParams(window.location.search);
+		this.date = this.urlParams.get("date");
+		this.weekday = this.urlParams.get("weekday");
+		const day = this.date.slice(6);
 		console.log(typeof(day));
-		const dayofweek = weekday == 0 ? "Sunday":  weekday == 1 ?"Monday" : weekday == 2 ? "Tuesday" : weekday == 3 ? "Wednesday" : weekday == 4 ? "Thursday" :weekday == 5 ? "Friday" : "Saturday";
+		const dayofweek = this.weekday == 0 ? "Sunday":  this.weekday == 1 ?"Monday" : this.weekday == 2 ? "Tuesday" : this.weekday == 3 ? "Wednesday" : this.weekday == 4 ? "Thursday" :this.weekday == 5 ? "Friday" : "Saturday";
 
 		const fbAssManager = null;
 		
 		console.log("detail mode");
-		console.log(day)
-		console.log(dayofweek)
 		document.getElementById("date").textContent = `${dayofweek} November ${day}`;
         // Sidebar Navigation
         document.querySelector("#menuSignOut").addEventListener("click", (event) => {
@@ -44,30 +42,31 @@ class DetailController {
                 console.log("Go to calendar");
             });  
 		}
-		rhit.fbMultiAssManager.beginListening(updateList.bind(this));
+		rhit.fbMultiAssManager.beginListening(this.updateList.bind(this));
 
-		console.log(`date: ${date}  weekday: ${weekday}`);
 
-		updateList();
+		this.updateList();
 
-		function updateList() {
-			console.log(`2 date: ${date}  weekday: ${weekday}`);
-			const newList = this._htmlToElement('<div id="day-list"></div>');
+		
+	}
+	updateList() {
+		const newList = this._htmlToElement('<div id="day-list"></div>');
+		if(rhit.fbMultiAssManager.length > 0){
 			for(let i = 0; i < rhit.fbMultiAssManager.length; i++) {
 				const ass = rhit.fbMultiAssManager.getAssAtIndex(i);
-				const newCard = this._createCard(ass, date, weekday);
+				const newCard = this._createCard(ass);
 				newList.appendChild(newCard);
 			}
-			const oldList = document.querySelector("#day-list");
-			oldList.parentElement.appendChild(newList);
-			oldList.remove();
-		}
+		 } else{
+			 newList.appendChild(this._htmlToElement("</br><h6>Nothing scheduled!</h6>"));
+		 }
+		const oldList = document.querySelector("#day-list");
+		oldList.parentElement.appendChild(newList);
+		oldList.remove();
 	}
-	
-	_createCard(todoItem, date, weekday) {
-		console.log(`3 date: ${date}  weekday: ${weekday}`);
+	_createCard(todoItem) {
 		return this._htmlToElement(`
-    	<div onclick = "window.location.href= '/edit.html?id=${todoItem.id}&date=${date}&weekday=${weekday}'" class="card" data-toggle="modal" data-target="#editAssDialog">
+    	<div onclick = "window.location.href= '/edit.html?id=${todoItem.id}&date=${this.date}&weekday=${this.weekday}'" class="card">
 		<div class="card-body">
 			<div class="form-check">
 				<input class="form-check-input" type="checkbox" value="false" id="defaultCheck1">

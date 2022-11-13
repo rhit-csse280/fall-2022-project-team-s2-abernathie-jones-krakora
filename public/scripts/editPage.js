@@ -1,5 +1,5 @@
 
-class editController {
+class EditController {
     constructor(){
         const urlParams = new URLSearchParams(window.location.search);
 		const date = urlParams.get("date");
@@ -32,6 +32,7 @@ class editController {
             });
             
 		}
+        rhit.fbAssManager.beginListening(this.updateList.bind(this));
 
         //Edit an Assignment
         document.querySelector("#submitEditAss").addEventListener("click", (event) => {
@@ -41,11 +42,12 @@ class editController {
             const priority = document.querySelector("#inputPriority").checked;
             
             rhit.fbAssManager.update(name, subject, date, priority);
+            window.location.href = `/detail.html?date=${date}&weekday=${weekday}`;
         });
         $("#editAssDialog").on("show.bs.modal", (event) => {
             console.log("dialog about to show up");
             document.querySelector("#inputName").value = rhit.fbAssManager.name;
-            document.querySelector("#inputClass").value = rhit.fbAssManager.class;
+            document.querySelector("#inputClass").value = rhit.fbAssManager.sub;
             document.querySelector("#inputDate").value = rhit.fbAssManager.date;
             document.querySelector("#inputPriority").checked = rhit.fbAssManager.priority;
         });
@@ -61,9 +63,43 @@ class editController {
                 console.error("Error removing document: ", error);
             });
         });
+        document.querySelector("#cancelEditAss").addEventListener("click", (event) => {
+            window.location.href = `/detail.html?date=${date}&weekday=${weekday}`;
+
+        });
+
+        this.updateList();
     }
+    updateList() {
+		const newList = this._htmlToElement('<div id="editCard"></div>');
+        const ass = rhit.fbAssManager.ass;
+        const newCard = this._createCard(ass.name);
+        newList.appendChild(newCard);
+	
+		const oldList = document.querySelector("#editCard");
+		oldList.parentElement.appendChild(newList);
+		oldList.remove();
+	};
+    _createCard(todoItem) {
+		return this._htmlToElement(`
+    	<div class="card">
+		<div class="card-body">
+			<div class="form-check">
+				<input class="form-check-input" type="checkbox" value="false" id="defaultCheck1">
+				<label class="form-check-label" for="defaultCheck1">
+					${todoItem}
+				</label>
+			</div>
+		</div>
+	</div>`);
+	}
+    _htmlToElement(html) {
+		const template = document.createElement("template");
+		template.innerHTML = html.trim();
+		return template.content.firstChild;
+	}
 
 
 }
 
-export { editController }
+export { EditController }
