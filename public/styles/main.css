@@ -139,3 +139,12 @@ body {
 #signinText {
     margin: 0;
 }
+
+#colorOptions {
+    padding: 14px;
+}
+
+#submitSettings {
+    background-color: var(--content-color);
+    color: var(--main-text-color);
+}
