@@ -270,7 +270,7 @@ rhit.FbMultiAssManager = class {
 
 /** Redirect if necessary */
 rhit.checkForRedirects = () => {
-	if (document.querySelector("#loginPage") && rhit.fbAuthManager.isSignedIn) window.location.href = "/calendar.html";
+	if (document.querySelector("#loginPage") && rhit.fbAuthManager.isSignedIn) window.location.href = `/list.html?uid=${rhit.fbAuthManager.uid}`;
 	if (!document.querySelector("#loginPage") && !rhit.fbAuthManager.isSignedIn) window.location.href = "/";
 }
 
