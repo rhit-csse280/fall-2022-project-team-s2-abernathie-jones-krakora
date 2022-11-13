@@ -48,14 +48,16 @@
       <!-- Page content -->
       <div id="settingsPage" class="container page-container">
         <h1 class="text-center display-4 my-5">Settings<br></h1>
+        <p>Color Blind Settings</p>
+        <div id="colorOptions" class="form-group bmd-form-group">
+          <input type="radio" id="html" name="fav_language" value="HTML">
+          <label for="html">Red/Green</label><br>
+          <input type="radio" id="css" name="fav_language" value="CSS">
+          <label for="css">Blue/Yellow</label><br>
+        </div>
+        <button id="submitSettings" type="button" class="btn btn-secondary">SAVE</button>
       </div>
 
-      <!-- Bottom navbar -->
-      <nav class="navbar bottom-navbar fixed-bottom">
-        <button type="button" class="btn btn-secondary"><i class="material-icons">list</i></button>
-        <button type="button" class="btn btn-secondary"><i class="material-icons">edit</i></button>
-        <button type="button" class="btn btn-secondary"><i class="material-icons">calendar_month</i></button>
-      </nav>
     </main>
   </div>
 
@@ -64,11 +66,11 @@
   <script src="scripts/popper.js"></script>
   <script src="scripts/bootstrap-material-design.js"></script>
   <script>$("body").bootstrapMaterialDesign();</script>
-  <!-- <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+  <script src="/__/firebase/7.18.0/firebase-app.js"></script>
   <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
   <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
   <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
-  <script src="/__/firebase/init.js"></script> -->
+  <script src="/__/firebase/init.js"></script>
   <script src="scripts/main.js"></script>
 
 </body>
