@@ -34,7 +34,7 @@ class CalendarController {
             
         }
 		const settingsItem = document.querySelector("#goToSettings");
-        if(calendarItem) {
+        if(settingsItem) {
             document.querySelector("#goToSettings").addEventListener("click", (event) => {
                 window.location.href = "/settings.html";
                 console.log("Go to settings");
