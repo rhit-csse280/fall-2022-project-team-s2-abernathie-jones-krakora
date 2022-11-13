@@ -87,6 +87,7 @@ class ListController {
 			  ${todoItem}
 			</label>
 		  </div>
+		  <p class="subjects card-subtitle">${todoItem.subject}</p>
 		</div>
 	  </div>`);
 	};
