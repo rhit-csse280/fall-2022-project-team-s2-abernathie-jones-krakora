@@ -31,7 +31,7 @@ class DetailController {
         const listItem = document.querySelector("#goToListPage");
         if(listItem) {
             document.querySelector("#goToListPage").addEventListener("click", (event) => {
-                window.location.href = "/list.html";
+				window.location.href = `/list.html?uid=${rhit.fbAuthManager.uid}`;
                 console.log("Go to list");
             });
         }
