@@ -33,8 +33,12 @@ class EditController {
             const date = document.querySelector("#inputDate").value;
             const priority = document.querySelector("#inputPriority").checked;
             
-            rhit.fbAssManager.update(name, subject, date, priority);
-            window.location.href = `/detail.html?uid=${rhit.fbAuthManager.uid}date=${date}&weekday=${weekday}`;
+            rhit.fbAssManager.update(name, subject, date, priority).then(function() { 
+                console.log("int then");
+                window.location.href = `/detail.html?uid=${rhit.fbAuthManager.uid}&date=${date}&weekday=${weekday}`})
+            .catch(function (error) {
+                console.error("Error removing document: ", error);
+            });
         });
         $("#editAssDialog").on("show.bs.modal", (event) => {
             console.log("dialog about to show up");
@@ -50,13 +54,13 @@ class EditController {
         document.querySelector("#submitDeleteAss").addEventListener("click", (event) => {
             rhit.fbAssManager.delete().then(function() {
                 console.log("Document successfully deleted!");
-                window.location.href = `/detail.html?date=${date}&weekday=${weekday}`;
+                window.location.href = `/detail.html?uid=${rhit.fbAuthManager.uid}&date=${date}&weekday=${weekday}`;
             }).catch(function (error) {
                 console.error("Error removing document: ", error);
             });
         });
         document.querySelector("#cancelEditAss").addEventListener("click", (event) => {
-            window.location.href = `/detail.html?uid=${rhit.fbAuthManager.uid}date=${date}&weekday=${weekday}`;
+            window.location.href = `/detail.html?uid=${rhit.fbAuthManager.uid}&date=${date}&weekday=${weekday}`;
 
         });
 
