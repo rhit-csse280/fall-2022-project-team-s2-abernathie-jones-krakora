@@ -148,3 +148,8 @@ body {
     background-color: var(--content-color);
     color: var(--main-text-color);
 }
+
+#editThis {
+    background-color: var(--content-color);
+    color: var(--main-text-color);
+}
