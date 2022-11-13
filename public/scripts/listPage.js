@@ -29,7 +29,11 @@ class ListController {
 		$("#addAssignmentDialog").on("shown.bs.modal", event => {
 			document.querySelector("#inputName").focus();
 		});
-
+		document.querySelector("#priorityCheck").addEventListener("click", event => {
+			//console.log(document.querySelector("#priorityCheck").checked)
+			rhit.fbMultiAssManager.beginListening(this.updateList.bind(this));
+			this.updateList();
+		});
 		rhit.fbMultiAssManager.beginListening(this.updateList.bind(this));
 
 		// Sidebar Navigation
