@@ -14,6 +14,10 @@ class EditController {
 		console.log("edit mode");
 		this._createCalendar(30, 1);
 
+		// Sidebar Navigation
+        document.querySelector("#menuSignOut").addEventListener("click", (event) => {
+			rhit.fbAuthManager.signOut();
+		});
 		const listItem = document.querySelector("#goToListPage");
         if(listItem) {
             document.querySelector("#goToListPage").addEventListener("click", (event) => {

@@ -12,6 +12,11 @@
 class ListController {
 	constructor(auth, mAss) {
 		console.log("list mode");
+
+		// Sidebar Navigation
+        document.querySelector("#menuSignOut").addEventListener("click", (event) => {
+			rhit.fbAuthManager.signOut();
+		});
 		document.querySelector("#submitAssignment").addEventListener("click", event => {
 			const name = document.querySelector("#inputName").value;
 			const subject = document.querySelector("#inputClass").value;

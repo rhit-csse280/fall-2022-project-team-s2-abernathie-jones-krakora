@@ -14,6 +14,11 @@
 class CalendarController {
 	constructor() {
 		console.log("calendar mode");
+
+		// Sidebar Navigation
+        document.querySelector("#menuSignOut").addEventListener("click", (event) => {
+			rhit.fbAuthManager.signOut();
+		});
 		document.querySelector("#submitAssignment").addEventListener("click", event => {
 			const name = document.querySelector("#inputName").value;
 			const subject = document.querySelector("#inputClass").value;
