@@ -81,4 +81,4 @@ class CalendarController {
 	}
 }
 
-export { EditController };
+export { CalendarController };

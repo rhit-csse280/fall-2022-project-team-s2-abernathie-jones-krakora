@@ -262,7 +262,7 @@ rhit.FbMultiAssManager = class {
 
 /** Redirect if necessary */
 rhit.checkForRedirects = () => {
-	if (document.querySelector("#loginPage") && rhit.fbAuthManager.isSignedIn) window.location.href = "/list.html";
+	if (document.querySelector("#loginPage") && rhit.fbAuthManager.isSignedIn) window.location.href = "/calendar.html";
 	if (!document.querySelector("#loginPage") && !rhit.fbAuthManager.isSignedIn) window.location.href = "/";
 }
 
@@ -281,19 +281,21 @@ rhit.init = async () => {
 		// 	});
 		// }
 		if (document.querySelector("#calendarPage")) {
-			import("./garbo.js/index.js").then((Module)=> {
-				const calendar =  new Module.CalendarController();
+			import("./calendarPage.js").then((Module)=> {
+				new Module.CalendarController();
 			});
 		}
 		if (document.querySelector("#listPage")) {
 			import("./listPage.js").then((Module)=> {
-				const list = new Module.ListController();
+				new Module.ListController();
 			});
 		}
 		if (document.querySelector("#detailPage")) {
 			import("./detailPage.js").then((Module)=> {
-				const detail = new Module.DetailController();
+				new Module.DetailController();
 			})
+			const assID = urlParams.get("id");
+			rhit.fbAssManager = new rhit.FbAssManager(assID);
 		}
 	}
 }

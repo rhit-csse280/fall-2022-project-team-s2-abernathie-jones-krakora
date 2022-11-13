@@ -36,34 +36,6 @@ class DetailController {
             });  
         }rhit.fbMultiAssManager.beginListening(this.updateList.bind(this));
 
-        //Edit an Assignment
-        document.querySelector("#submitEditAss").addEventListener("click", (event) => {
-			const name = document.querySelector("#inputName").value;
-			const subject = document.querySelector("#inputClass").value;
-            const date = document.querySelector("#inputDate").value;
-            const priority = document.querySelector("#inputPriority").checked;
-			
-			fbAssManager.update(name, subject, date, priority);
-		});
-        $("#editAssDialog").on("show.bs.modal", (event) => {
-			console.log("dialog about to show up");
-			document.querySelector("#inputName").value = fbAssManager.name;
-			document.querySelector("#inputClass").value = fbAssManager.class;
-            document.querySelector("#inputDate").value = fbAssManager.date;
-            document.querySelector("#inputPriority").checked = fbAssManager.priority;
-		});
-		$("#editAssDialog").on("shown.bs.modal", (event) => {
-			console.log("dialog is now visible");
-			document.querySelector("#inputName").focus();
-		});
-        document.querySelector("#submitDeleteAss").addEventListener("click", (event) => {
-			fbAssManager.delete().then(function() {
-				console.log("Document successfully deleted!");
-			}).catch(function (error) {
-				console.error("Error removing document: ", error);
-			});
-		});
-
 
 		this.updateList();
 	}
