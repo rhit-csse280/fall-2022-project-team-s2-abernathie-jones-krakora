@@ -151,11 +151,6 @@ body {
     color: var(--main-text-color);
 }
 
-#editThis {
-    background-color: var(--content-color);
-    color: var(--main-text-color);
-}
-
 #clearSettings {
     background-color: var(--content-color);
     color: var(--main-text-color);
@@ -247,3 +242,10 @@ body {
   .subjects {
     margin: 10px auto auto 25px;
   }
+ 
+#editThis {
+    background-color: var(--content-color);
+    color: var(--main-text-color);
+    margin-right: 0px;
+    margin-left: auto;
+}

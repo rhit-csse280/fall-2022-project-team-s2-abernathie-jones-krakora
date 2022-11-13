@@ -65,7 +65,7 @@ class EditController {
     updateList() {
 		const newList = this._htmlToElement('<div id="editCard"></div>');
         const ass = rhit.fbAssManager.ass;
-        const newCard = this._createCard(ass.name);
+        const newCard = this._createCard(ass);
         newList.appendChild(newCard);
 	
 		const oldList = document.querySelector("#editCard");
@@ -79,7 +79,7 @@ class EditController {
 			<div class="form-check">
 				<input class="form-check-input" type="checkbox" value="false" id="defaultCheck1">
 				<label class="form-check-label" for="defaultCheck1">
-					${todoItem}
+					${todoItem.name}
 				</label>
 			</div>
 			<p class="subjects card-subtitle">${todoItem.subject}</p>
