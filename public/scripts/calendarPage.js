@@ -41,7 +41,26 @@ class CalendarController {
             });
             
 		}
+		//handling adding assignments
+		document.querySelector("#submitAssignment").addEventListener("click", event => {
+			const name = document.querySelector("#inputName").value;
+			const subject = document.querySelector("#inputClass").value;
+			const date = document.querySelector("#inputDate").value;
+			const priority = document.querySelector("#inputPriority").checked;
+			rhit.fbMultiAssManager.add(name, subject, date, priority);
+		});
+		$("#addAssignmentDialog").on("show.bs.modal", event => {
+			document.querySelector("#inputName").value = "";
+			document.querySelector("#inputClass").value = "";
+			document.querySelector("#inputDate").value = "";
+			document.querySelector("#inputPriority").checked = false;
+		});
+		$("#addAssignmentDialog").on("shown.bs.modal", event => {
+			document.querySelector("#inputName").focus();
+		});
+		
 	}
+	
 	_createCalendar = (numDays, offset)=> {
 		const oldCalendar = document.querySelector("#ed-calendar");
 		const newCalendar = this._htmlToElement(`<div id="ed-calendar">

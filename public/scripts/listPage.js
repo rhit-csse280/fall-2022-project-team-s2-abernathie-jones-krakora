@@ -69,20 +69,6 @@ class ListController {
 		oldList.parentElement.appendChild(newList);
 		oldList.remove();
 	};
-
-	_createElement(todoItem) {
-		return this._htmlToElement(`<div class="card">
-		<div class="card-body">
-		  <div class="form-check">
-			<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-			<label class="form-check-label" for="defaultCheck1">
-			  ${todoItem.name}
-			</label>
-		  </div>
-		  <p class="subjects card-subtitle">${todoItem.subject}</p>
-		</div>
-	  </div>`);
-	};
 	_createCard(todoItem) {
 		return this._htmlToElement(`<div class="card">
 		<div class="card-body">
