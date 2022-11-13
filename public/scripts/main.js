@@ -309,6 +309,12 @@ rhit.init = async () => {
 			})
 			
 		}
+		if (document.querySelector("#settingsPage")) {
+			import("./settingsPage.js").then((Module)=> {
+				new Module.SettingsController();
+			})
+			
+		}
 	}
 }
 
