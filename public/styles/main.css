@@ -156,6 +156,11 @@ body {
     color: var(--main-text-color);
 }
 
+#clearSettings {
+    background-color: var(--content-color);
+    color: var(--main-text-color);
+}
+
 .list-group-item {
     cursor: pointer;
 }
