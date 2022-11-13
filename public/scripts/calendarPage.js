@@ -12,9 +12,7 @@
 
 /** Calendar Page Controller */
 class CalendarController {
-	constructor(auth, mAss) {
-		const fbAuthManager = auth;
-		const fbMultiAssManager = mAss;
+	constructor() {
 		console.log("calendar mode");
 		document.querySelector("#submitAssignment").addEventListener("click", event => {
 			const name = document.querySelector("#inputName").value;
