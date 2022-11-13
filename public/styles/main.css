@@ -153,3 +153,17 @@ body {
     background-color: var(--content-color);
     color: var(--main-text-color);
 }
+
+.list-group-item {
+    cursor: pointer;
+}
+
+#fab:active {
+    transform: translateY(2px);
+    opacity: 0.8;
+}
+
+#detailPage .card,
+#calendarPage .card {
+    cursor: pointer;
+}
