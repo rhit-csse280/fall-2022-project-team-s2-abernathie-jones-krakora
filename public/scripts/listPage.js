@@ -62,7 +62,7 @@ class ListController {
 		const newList = this._htmlToElement('<div id="checklist"></div>');
 		for(let i = 0; i < rhit.fbMultiAssManager.length; i++) {
 			const ass = rhit.fbMultiAssManager.getAssAtIndex(i);
-			const newCard = this._createCard(ass.name);
+			const newCard = this._createCard(ass);
 			newList.appendChild(newCard);
 		}
 		const oldList = document.querySelector("#checklist");
@@ -76,7 +76,7 @@ class ListController {
 		  <div class="form-check">
 			<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
 			<label class="form-check-label" for="defaultCheck1">
-			  ${todoItem}
+			  ${todoItem.name}
 			</label>
 		  </div>
 		  <p class="subjects card-subtitle">${todoItem.subject}</p>
@@ -89,9 +89,10 @@ class ListController {
 			<div class="form-check">
 				<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
 				<label class="form-check-label" for="defaultCheck1">
-					${todoItem}
+					${todoItem.name}
 				</label>
 			</div>
+			<p class="subjects card-subtitle">${todoItem.subject}</p>
 		</div>
 	</div>`);
 	};
