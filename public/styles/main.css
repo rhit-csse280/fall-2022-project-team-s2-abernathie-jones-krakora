@@ -243,3 +243,7 @@ body {
   #priorityText {
     margin: 0 25px 0 auto;
   }
+
+  .subjects {
+    margin: 10px auto auto 25px;
+  }

@@ -43,7 +43,7 @@ class ListController {
 		const listItem = document.querySelector("#goToListPage");
         if(listItem) {
             document.querySelector("#goToListPage").addEventListener("click", (event) => {
-                window.location.href = "/list.html";
+                window.location.href = `/list.html?uid=${rhit.fbAuthManager.uid}`;
                 console.log("Go to list");
             });
         }
@@ -87,6 +87,7 @@ class ListController {
 			  ${todoItem}
 			</label>
 		  </div>
+		  <p class="subjects card-subtitle">${todoItem.subject}</p>
 		</div>
 	  </div>`);
 	};

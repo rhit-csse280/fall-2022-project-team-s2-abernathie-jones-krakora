@@ -74,6 +74,7 @@ class DetailController {
 					${todoItem.name}
 				</label>
 			</div>
+            <p class="subjects card-subtitle">${todoItem.subject}</p>
 		</div>
 	</div>`);
 	}

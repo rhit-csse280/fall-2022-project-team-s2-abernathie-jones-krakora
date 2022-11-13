@@ -90,6 +90,7 @@ class EditController {
 					${todoItem}
 				</label>
 			</div>
+			<p class="subjects card-subtitle">${todoItem.subject}</p>
 		</div>
 	</div>`);
 	}
