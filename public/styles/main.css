@@ -177,6 +177,7 @@ body {
     display: inline-block;
     width: 60px;
     height: 34px;
+    margin: 4px 0;
   }
   
   /* Hide default HTML checkbox */
@@ -232,4 +233,8 @@ body {
   
   .slider.round:before {
     border-radius: 50%;
+  }
+
+  #priorityText {
+    margin: 0 25px 0 auto;
   }
