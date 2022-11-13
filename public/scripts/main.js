@@ -12,7 +12,7 @@ var rhit = rhit || {};
 /** Firebase keys */
 rhit.FB_COLLECTION_USERS = "Users";
 rhit.FB_KEY_NAME = "name";
-rhit.FB_KEY_PHOTO_URL = "photoUrl";
+rhit.FB_KEY_COLOR = "color";
 rhit.FB_KEY_ASSNAME = "assName";
 rhit.FB_KEY_ASSSUB = "assSub";
 rhit.FB_KEY_ASSDATE = "assDate";
@@ -51,7 +51,7 @@ rhit.FbUserManager = class {
 		this._unsubscribe = null;
 		console.log("created user manager");
 	}
-	addNewUserMaybe(uid, name) {	// Add new user, if one doesn't already exist
+	addNewUserMaybe(uid, name, color) {	// Add new user, if one doesn't already exist
 		const userRef = this._collectionRef.doc(uid);
 		return userRef.get().then(doc => {
 			if (doc.exists) {
@@ -79,14 +79,15 @@ rhit.FbUserManager = class {
 		});
 	}
 	stopListening() { this._unsubscribe(); }
-	updateColorSetting(color) {
+	updateColorSetting(colorSet) {
+		console.log(colorSet);
 		const userRef = this._collectionRef.doc(rhit.fbAuthManager.uid);
-		userRef.update({ [rhit.FB_KEY_COLOR]: color, })
-			.then(() => { console.log("update success");})
+		return userRef.update({ [rhit.FB_KEY_COLOR]: colorSet, })
+			.then(() => { console.log(userRef.color);})
 			.catch(error => { console.error("update error: ", error); });
 	}
 	get name() { return this._document.get(rhit.FB_KEY_NAME); }
-	get photoUrl() { return this._document.get(rhit.FB_KEY_PHOTO_URL); }
+	get color() { return this._document.get(rhit.FB_KEY_COLOR); }
 	get isListening() { return !!this._unsubscribe; }
 }
 
@@ -104,7 +105,7 @@ rhit.FbAuthManager = class {
 	constructor() {
 		this._user = null;
 		this._name = "";
-		this._photoUrl = "";
+		this._color = "none";
 		console.log("You have made the Auth Manager.");
 	}
 	beginListening(changeListener) {
@@ -153,7 +154,7 @@ rhit.FbAuthManager = class {
 	get isSignedIn() { return !!this._user; }
 	get uid() { return this._user.uid; }
 	get name() { return this._name || this._user.displayName; }
-	get photoUrl() { return this._photoUrl || this._user.photoUrl; }
+	get color() { return this._color || this._user.color; }
 }
 
 /** Asignment manager for single assignments */
@@ -275,7 +276,6 @@ rhit.checkForRedirects = () => {
 
 /** Initialize the code for whichever page the user is on */
 rhit.init = async () => {
-	
 	if (document.querySelector("#loginPage")) new rhit.LoginPageController();
 	else {
 		const urlParams = new URLSearchParams(window.location.search);
@@ -306,6 +306,7 @@ rhit.init = async () => {
 			
 		}
 		if (document.querySelector("#settingsPage")) {
+			rhit.fbUserManager = new rhit.FbUserManager();
 			import("./settingsPage.js").then((Module)=> {
 				new Module.SettingsController();
 			})
@@ -328,7 +329,7 @@ rhit.createUserObjectIfNeeded = () => {
 		rhit.fbUserManager.addNewUserMaybe(
 			rhit.fbAuthManager.uid,
 			rhit.fbAuthManager.name,
-			rhit.fbAuthManager.photoUrl,
+			rhit.fbAuthManager.color,
 		).then((isUserNew) => { resolve(isUserNew); });
 	});
 }
@@ -343,7 +344,7 @@ rhit.main = () => {
 		rhit.createUserObjectIfNeeded().then((isUserNew) => {
 			console.log('isUserNew :>> ', isUserNew);
 			if (isUserNew) {
-				window.location.href = "/list.html";
+				window.location.href = `/list.html?uid=${rhit.fbAuthManager.uid}`;
 				return;
 			}
 			rhit.checkForRedirects();

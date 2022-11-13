@@ -1,6 +1,7 @@
 
 class SettingsController {
     constructor(){
+        this.color = null;
 		//Sidebar navigation
         document.querySelector("#menuSignOut").addEventListener("click", (event) => {
 			rhit.fbAuthManager.signOut();
@@ -27,12 +28,42 @@ class SettingsController {
                 console.log("Go to settings");
             });
             
-		}
+        }
+        
+        rhit.fbUserManager.beginListening(rhit.fbAuthManager.uid, this.update.bind(this));
 
         //Change settings
         document.querySelector("#submitSettings").addEventListener("click", (event) => {
+            this.update();
+            if(document.querySelector("#redgreen").checked == true){
+                console.log("passing redgreen");
+                this.color = "redgreen";
+
+                rhit.fbUserManager.updateColorSetting("redgreen")
+            }else if(document.querySelector("#blueyellow").checked == true) {
+                this.color = "blueyellow";
+                console.log("Passing blueyellow");
+
+                rhit.fbUserManager.updateColorSetting("blueyellow")}
             
         });
+        document.querySelector("#clearSettings").addEventListener("click", (event) => {
+            console.log("passing none");
+            this.color = "none";
+
+            rhit.fbUserManager.updateColorSetting("none");
+            
+            this.update();
+        });
+        this.update();
+    }
+    update(){
+       if(rhit.fbUserManager.color != "none"){
+        document.querySelector(`#${rhit.fbUserManager.color}`).checked = true;
+       }else{
+        document.querySelector("#redgreen").checked = false;
+        document.querySelector("#blueyellow").checked = false;
+       }
     }
 }
 
