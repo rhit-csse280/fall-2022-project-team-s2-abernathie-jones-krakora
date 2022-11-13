@@ -62,7 +62,7 @@ class CalendarController {
 				day = i;
 			}
 			const card = this._htmlToElement(`
-			<div onclick = 'window.location.href = "/detail.html?date=202211${day}&weekday=${(offset + i)%7};"' data-date="${day}" class="card">
+			<div onclick = 'window.location.href = "/detail.html?date=202211${day}&weekday=${(offset + i)%7}"' data-date="${day}" class="card">
 				<div class="card-body">
 					${i}
 				</div>
